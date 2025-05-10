@@ -17,4 +17,5 @@ Home Screen:
 
 
 Details Screen: 
+
 ![image](https://github.com/user-attachments/assets/c95c1748-0fa3-4246-8210-66547f09babb)
