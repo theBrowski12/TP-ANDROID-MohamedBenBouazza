@@ -30,6 +30,7 @@ fun ProductCard(product: Product, onClick: () -> Unit) {
             .fillMaxWidth()
             .clickable { onClick() },
         elevation = CardDefaults.cardElevation(4.dp)
+
     ) {
         Row(modifier = Modifier.padding(16.dp)) {
             Image(
@@ -47,6 +48,7 @@ fun ProductCard(product: Product, onClick: () -> Unit) {
                 Text(product.name, style = MaterialTheme.typography.titleMedium)
                 Text("${product.price} Dh", style = MaterialTheme.typography.bodyMedium)
                 Text("Ancien prix : ${product.oldPrice} Dh", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.outline)
+                Text("Quantity: ${product.quantity}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.scrim)
             }
         }
     }

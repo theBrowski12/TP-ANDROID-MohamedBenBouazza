@@ -35,7 +35,8 @@ fun AppNavigation() {
 
             DetailsScreen(
                 productId = productId,
-                onBack = { navController.popBackStack() }
+                onBack = { navController.popBackStack() },
+                onBuy = {}
             )
         }
     }
