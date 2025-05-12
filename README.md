@@ -18,4 +18,5 @@ Home Screen:
 
 Details Screen: 
 
-![image](https://github.com/user-attachments/assets/c95c1748-0fa3-4246-8210-66547f09babb)
+![image](https://github.com/user-attachments/assets/52dcf69f-b392-419e-8f38-9853c82191e1)
+
