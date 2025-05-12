@@ -20,3 +20,4 @@ Details Screen:
 
 ![image](https://github.com/user-attachments/assets/52dcf69f-b392-419e-8f38-9853c82191e1)
 
+
