@@ -7,7 +7,11 @@
         <option name="testRunner" value="CHOOSE_PER_TEST" />
         <option name="distributionType" value="LOCAL" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
+<<<<<<< HEAD
         <option name="gradleHome" value="$USER_HOME$/Downloads/gradle-8.13-bin/gradle-8.13" />
+=======
+        <option name="gradleHome" value="$PROJECT_DIR$/../gradle-8.13-bin/gradle-8.13" />
+>>>>>>> 49c4b61b1e8a076dbd190c9beaada34bb5a35e1e
         <option name="gradleJvm" value="#GRADLE_LOCAL_JAVA_HOME" />
         <option name="modules">
           <set>

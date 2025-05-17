@@ -4,13 +4,20 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+<<<<<<< HEAD
 import androidx.activity.viewModels
+=======
+>>>>>>> 49c4b61b1e8a076dbd190c9beaada34bb5a35e1e
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.ui.res.painterResource
+<<<<<<< HEAD
+=======
+import androidx.compose.foundation.layout.fillMaxSize
+>>>>>>> 49c4b61b1e8a076dbd190c9beaada34bb5a35e1e
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -18,13 +25,26 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+<<<<<<< HEAD
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+=======
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+>>>>>>> 49c4b61b1e8a076dbd190c9beaada34bb5a35e1e
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+<<<<<<< HEAD
 import androidx.compose.runtime.mutableStateOf
+=======
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+>>>>>>> 49c4b61b1e8a076dbd190c9beaada34bb5a35e1e
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -33,18 +53,30 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+<<<<<<< HEAD
 import com.example.emtyapp.nav.AppNavigation
 import com.example.emtyapp.ui.product.ProductViewModel
+=======
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.example.emtyapp.nav.AppNavigation
+import com.example.emtyapp.nav.Routes
+>>>>>>> 49c4b61b1e8a076dbd190c9beaada34bb5a35e1e
 import com.example.emtyapp.ui.theme.EmtyAppTheme
 import kotlinx.coroutines.delay
 
 class MainActivity : ComponentActivity() {
+<<<<<<< HEAD
     private val viewModel: ProductViewModel by viewModels<ProductViewModel>()
+=======
+>>>>>>> 49c4b61b1e8a076dbd190c9beaada34bb5a35e1e
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+<<<<<<< HEAD
             EmtyAppTheme {
                 Surface{
                     AppNavigation(viewModel)
@@ -145,4 +177,9 @@ fun GreetingPreview() {
         }
 
     }
+=======
+                    AppNavigation()
+        }
+    }
+>>>>>>> 49c4b61b1e8a076dbd190c9beaada34bb5a35e1e
 }

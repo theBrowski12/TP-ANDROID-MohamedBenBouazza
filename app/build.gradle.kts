@@ -2,8 +2,11 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+<<<<<<< HEAD
     id("com.google.dagger.hilt.android")
     id("com.google.devtools.ksp")
+=======
+>>>>>>> 49c4b61b1e8a076dbd190c9beaada34bb5a35e1e
 }
 
 android {
@@ -52,8 +55,12 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+<<<<<<< HEAD
     implementation("com.google.dagger:hilt-android:2.56.1")
     ksp("com.google.dagger:hilt-compiler:2.56.1")
+=======
+
+>>>>>>> 49c4b61b1e8a076dbd190c9beaada34bb5a35e1e
     implementation("androidx.navigation:navigation-compose:$nav_version")
 
     testImplementation(libs.junit)
