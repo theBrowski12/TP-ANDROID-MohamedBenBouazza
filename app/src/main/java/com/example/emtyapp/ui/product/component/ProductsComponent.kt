@@ -23,24 +23,45 @@ import com.example.emtyapp.data.Entities.Product
 
 @Composable
 fun ProductsList(products: List<Product>, onNavigateToDetails: (String) -> Unit) {
-    LazyColumn (
+    LazyColumn(
         modifier = Modifier
             .fillMaxSize()
             .padding(8.dp)
-    ){
+    ) {
         item {
-            Image(
-                painter = painterResource(id = R.drawable.logo),
-                contentDescription = "Logo",
+            // --- Header Banner ---
+            androidx.compose.foundation.layout.Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .heightIn(min = 120.dp, max = 150.dp) // vertically stretches in a nice range
-                    .padding(bottom = 12.dp)
+                    .height(80.dp)
                     .clip(RoundedCornerShape(12.dp))
-                    .background(Color.White), // or any branding background
-                contentScale = ContentScale.Fit // or .Crop if you want full cover
-            )
+                    .background(Color(0xFFB6A17A)) // Bamboo-style beige/green tone
+                    .padding(horizontal = 16.dp),
+                verticalAlignment = androidx.compose.ui.Alignment.CenterVertically
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.logo),
+                    contentDescription = "Logo",
+                    modifier = Modifier
+                        .height(50.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                )
+                androidx.compose.foundation.layout.Spacer(modifier = Modifier.weight(1f))
+
+                androidx.compose.material3.Text(
+                    text = "Nos Produits",
+                    style = androidx.compose.material3.MaterialTheme.typography.titleLarge,
+                    color = Color.White,
+                    modifier = Modifier.weight(3f)
+
+                )
+
+                androidx.compose.foundation.layout.Spacer(modifier = Modifier.weight(1f))
+            }
+
+            androidx.compose.foundation.layout.Spacer(modifier = Modifier.height(12.dp))
         }
+
         items(products) { product ->
             ProductItem(product, onNavigateToDetails)
         }

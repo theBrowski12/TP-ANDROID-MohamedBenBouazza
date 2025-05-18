@@ -9,7 +9,9 @@ import com.example.emtyapp.ui.product.ProductViewModel
 import com.example.emtyapp.ui.theme.EmtyAppTheme
 import androidx.compose.material3.Surface
 import androidx.activity.viewModels
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     private val viewModel: ProductViewModel by viewModels<ProductViewModel>()

@@ -47,35 +47,45 @@ fun DetailsScreen(productId: String, onBuy: () -> Unit) {
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
+                .background(Color(0xFFE8F5E9)) // Bamboo green background
                 .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
-            // Image with background & shape
-            Box(
+            // Product Image Card
+            // Product Image Card
+            Card(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(220.dp)
-                    .clip(RoundedCornerShape(12.dp))
-                    .background(Color(0xFFF5F5F5)), // Light gray background
-                contentAlignment = Alignment.Center
+                    .height(180.dp), // Reduced height
+                shape = RoundedCornerShape(16.dp),
+                colors = CardDefaults.cardColors(containerColor = Color.White),
+                elevation = CardDefaults.cardElevation(6.dp)
             ) {
-                Image(
-                    painter = painterResource(id = product.imageResId),
-                    contentDescription = product.name,
-                    contentScale = ContentScale.Fit,
+                Box(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(8.dp)
-                )
+                        .fillMaxSize()
+                        .padding(12.dp), // Padding inside the card
+                    contentAlignment = Alignment.Center
+                ) {
+                    Image(
+                        painter = painterResource(id = product.imageResId),
+                        contentDescription = product.name,
+                        contentScale = ContentScale.Fit, // Keep original size ratio
+                        modifier = Modifier.fillMaxSize()
+                    )
+                }
             }
 
-            Spacer(modifier = Modifier.height(24.dp))
+
+            Spacer(modifier = Modifier.height(20.dp))
 
             // Product Name
             Text(
                 text = product.name,
-                style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Bold),
+                style = MaterialTheme.typography.headlineSmall.copy(
+                    fontWeight = FontWeight.Bold,
+                    color = Color(0xFF2E7D32) // Bamboo green dark
+                ),
                 textAlign = TextAlign.Center
             )
 
@@ -84,9 +94,9 @@ fun DetailsScreen(productId: String, onBuy: () -> Unit) {
             // Price
             Text(
                 text = "${product.price} DH",
-                style = MaterialTheme.typography.bodyLarge.copy(
+                style = MaterialTheme.typography.titleMedium.copy(
                     fontWeight = FontWeight.Bold,
-                    color = Color(0xFF388E3C) // Green
+                    color = Color(0xFF4CAF50) // Green
                 )
             )
 
@@ -99,48 +109,65 @@ fun DetailsScreen(productId: String, onBuy: () -> Unit) {
                 )
             )
 
-            Spacer(modifier = Modifier.height(16.dp))
-            val quantityColor = if (product.quantity < 10) Color.Red else Color(0xFF1E88E5) // Blue
+            Spacer(modifier = Modifier.height(12.dp))
 
-            // Quantity
+            val quantityColor = if (product.quantity < 10) Color.Red else Color(0xFF2E7D32)
+
             Text(
                 text = "Disponible : ${product.quantity} unités",
-                style = MaterialTheme.typography.bodyMedium,
+                style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium),
                 color = quantityColor
             )
 
-            Spacer(modifier = Modifier.height(16.dp))
             if (product.quantity < 10) {
+                Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     text = "⚠️ Stock faible",
                     style = MaterialTheme.typography.bodyMedium,
-                    color = Color(0xFFFF9800), // Orange
-                    fontWeight = FontWeight.Medium
+                    color = Color(0xFFFFA000), // Warning orange
+                    fontWeight = FontWeight.SemiBold
                 )
             }
-            // Description title
+
+            Spacer(modifier = Modifier.height(20.dp))
+
+            // Description
             Text(
                 text = "Description",
-                style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.SemiBold),
+                style = MaterialTheme.typography.titleMedium.copy(
+                    fontWeight = FontWeight.SemiBold,
+                    color = Color(0xFF1B5E20)
+                ),
                 modifier = Modifier.align(Alignment.Start)
             )
 
-            // Description content
+            Spacer(modifier = Modifier.height(4.dp))
+
             Text(
                 text = product.description,
                 style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier.align(Alignment.Start),
-                color = Color.Black
+                color = Color.DarkGray
             )
-            Spacer(modifier = Modifier.height(18.dp))
 
+            Spacer(modifier = Modifier.height(24.dp))
 
-            Button(onClick = onBuy) {
-
-                Icon(imageVector = Icons.Default.ShoppingCart, contentDescription = "Retour")
+            // Buy Button
+            Button(
+                onClick = onBuy,
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF81C784)), // Bamboo-style green
+                modifier = Modifier.fillMaxWidth().height(50.dp),
+                shape = RoundedCornerShape(12.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.ShoppingCart,
+                    contentDescription = "Acheter",
+                    tint = Color.White
+                )
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Acheter")
+                Text("Acheter", color = Color.White)
             }
         }
     }
 }
+
