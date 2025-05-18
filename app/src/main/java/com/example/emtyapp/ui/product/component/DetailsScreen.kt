@@ -1,11 +1,14 @@
 package com.example.emtyapp.ui.product.component
 
+import android.widget.Button
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -26,7 +29,7 @@ import com.example.emtyapp.data.Repository.ProductRepository
 
 
 @Composable
-fun DetailsScreen(productId: String) {
+fun DetailsScreen(productId: String, onBuy: () -> Unit) {
     val repository = remember { ProductRepository() }
 
     val productState by produceState<Product?>(initialValue = null) {
@@ -80,7 +83,7 @@ fun DetailsScreen(productId: String) {
 
             // Price
             Text(
-                text = "${product.price} DA",
+                text = "${product.price} DH",
                 style = MaterialTheme.typography.bodyLarge.copy(
                     fontWeight = FontWeight.Bold,
                     color = Color(0xFF388E3C) // Green
@@ -89,7 +92,7 @@ fun DetailsScreen(productId: String) {
 
             // Old Price
             Text(
-                text = "${product.oldPrice} DA",
+                text = "${product.oldPrice} DH",
                 style = MaterialTheme.typography.bodyMedium.copy(
                     color = Color.Gray,
                     textDecoration = TextDecoration.LineThrough
@@ -97,16 +100,24 @@ fun DetailsScreen(productId: String) {
             )
 
             Spacer(modifier = Modifier.height(16.dp))
+            val quantityColor = if (product.quantity < 10) Color.Red else Color(0xFF1E88E5) // Blue
 
             // Quantity
             Text(
                 text = "Disponible : ${product.quantity} unités",
                 style = MaterialTheme.typography.bodyMedium,
-                color = Color.DarkGray
+                color = quantityColor
             )
 
             Spacer(modifier = Modifier.height(16.dp))
-
+            if (product.quantity < 10) {
+                Text(
+                    text = "⚠️ Stock faible",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = Color(0xFFFF9800), // Orange
+                    fontWeight = FontWeight.Medium
+                )
+            }
             // Description title
             Text(
                 text = "Description",
@@ -121,6 +132,15 @@ fun DetailsScreen(productId: String) {
                 modifier = Modifier.align(Alignment.Start),
                 color = Color.Black
             )
+            Spacer(modifier = Modifier.height(18.dp))
+
+
+            Button(onClick = onBuy) {
+
+                Icon(imageVector = Icons.Default.ShoppingCart, contentDescription = "Retour")
+                Spacer(modifier = Modifier.width(8.dp))
+                Text("Acheter")
+            }
         }
     }
 }

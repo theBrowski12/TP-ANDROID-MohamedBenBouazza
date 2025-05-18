@@ -3,10 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <application
-<<<<<<< HEAD
 
-=======
->>>>>>> 49c4b61b1e8a076dbd190c9beaada34bb5a35e1e
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
