@@ -26,10 +26,12 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import com.example.emtyapp.data.Entities.Product
 import com.example.emtyapp.data.Repository.ProductRepository
+import com.example.emtyapp.ui.product.ProductIntent
+import com.example.emtyapp.ui.product.ProductViewModel
 
 
 @Composable
-fun DetailsScreen(productId: String, onBuy: () -> Unit) {
+fun DetailsScreen(productId: String, viewModel: ProductViewModel,onBuy: () -> Unit) {
     val repository = remember { ProductRepository() }
 
     val productState by produceState<Product?>(initialValue = null) {

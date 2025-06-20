@@ -19,20 +19,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.emtyapp.data.Entities.Product
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.TextButton
 import androidx.compose.ui.text.style.TextDecoration
 
 
 @Composable
 fun ProductItem(
     product: Product,
-    onNavigateToDetails: (String) -> Unit
+    onNavigateToDetails: (String) -> Unit,
+    onAddToCart: () -> Unit
 ) {
     Card(
         modifier = Modifier
@@ -47,7 +48,7 @@ fun ProductItem(
             Image(
                 painter = painterResource(id = product.imageResId),
                 contentDescription = product.name,
-                contentScale = ContentScale.Crop,
+                contentScale = ContentScale.Inside,
                 modifier = Modifier
                     .size(100.dp)
                     .clip(RoundedCornerShape(12.dp))
@@ -77,27 +78,47 @@ fun ProductItem(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = "${product.oldPrice} MAD",
+                        text = "${product.price} MAD", // Current price (green)
                         style = MaterialTheme.typography.titleSmall,
-                        color = Color(0xFF2E7D32), // Vert feuille
+                        color = Color(0xFF2E7D32)
                     )
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text(
-                        text = "${product.price} MAD",
-                        style = MaterialTheme.typography.bodySmall.copy(textDecoration = TextDecoration.LineThrough),
-                        color = Color.Gray
-                    )
+                    if (product.oldPrice > product.price) { // Only show if discounted
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(
+                            text = "${product.oldPrice} MAD", // Old price (strikethrough)
+                            style = MaterialTheme.typography.bodySmall.copy(
+                                textDecoration = TextDecoration.LineThrough
+                            ),
+                            color = Color.Gray
+                        )
+                    }
                 }
 
                 Spacer(modifier = Modifier.height(8.dp))
-
-                Button(
+                if (product.quantity > 9) {
+                    Text(
+                        text = "${product.quantity} en stock",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = Color(0xFF2E7D32) // Green
+                    )
+                } else {
+                    Text(
+                        text = "Stock Faible ,reste que ${product.quantity} !!",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = Color.Red
+                    )
+                }
+                TextButton(
                     onClick = { onNavigateToDetails(product.id) },
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF81C784)), // Vert bambou clair
-                    shape = RoundedCornerShape(12.dp),
                     modifier = Modifier.align(Alignment.End)
                 ) {
-                    Text("plus de details ...", color = Color.White)
+                    Text("Voir détails", color = Color(0xFF2E7D32))
+                }
+                Button(
+                    onClick = { onAddToCart() },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF81C784))
+                ) {
+                    Text("Ajouter au panier", color = Color.White)
                 }
             }
         }
