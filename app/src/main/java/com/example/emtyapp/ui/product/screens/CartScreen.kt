@@ -33,7 +33,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 @Composable
 fun CartScreen(
     navController: NavController,
-    viewModel: ProductViewModel = hiltViewModel()
+    viewModel: ProductViewModel
 ) {
     val cartItems by viewModel.cartItems.collectAsState()
     val totalPrice by viewModel.cartTotal.collectAsState()

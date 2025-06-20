@@ -1,6 +1,7 @@
 package com.example.emtyapp.nav
 
 import androidx.compose.runtime.Composable
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -20,7 +21,7 @@ object Routes {
 }
 
 @Composable
-fun AppNavigation(viewModel: ProductViewModel) {
+fun AppNavigation(viewModel: ProductViewModel= hiltViewModel()) {
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = Routes.Home) {
@@ -41,7 +42,7 @@ fun AppNavigation(viewModel: ProductViewModel) {
             val productId = backStackEntry.arguments?.getString("productId") ?: ""
             DetailsScreen(
                 productId = productId,
-                viewModel = ProductViewModel(repository = ProductRepository()),
+                viewModel = viewModel,
                 onBuy = {
                     viewModel.handleIntent(ProductIntent.AddToCart(productId))
                     println("Product added to cart: $productId")
@@ -49,7 +50,8 @@ fun AppNavigation(viewModel: ProductViewModel) {
             )
         }
         composable(Routes.Cart) {
-            CartScreen(navController = navController)
+            CartScreen(navController = navController,
+                viewModel = viewModel) // )
         }
 
     }
