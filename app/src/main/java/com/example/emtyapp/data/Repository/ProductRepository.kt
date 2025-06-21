@@ -1,24 +1,51 @@
 package com.example.emtyapp.data.Repository
 
+import android.util.Log
 import com.example.emtyapp.R
+import com.example.emtyapp.data.API.ProductApi
 import com.example.emtyapp.data.Entities.Product
 import kotlinx.coroutines.delay
 import javax.inject.Inject
+import kotlin.math.log
 
-class ProductRepository @Inject constructor() {
-    suspend fun getProducts(): List<Product> {
-        // Simulate fetching data from a remote server or database
-        delay(2000)
-        return listOf(
-            Product("PR001", "iPhone 14", 6900.0, 7999.0, imageResId = R.drawable.iphone14, 5, "new iPhone 14"),
-            Product("PR002", "Tablette Samsung", 2500.0, 5888.0, R.drawable.samsungtab, 8,"new tablette samsung"),
-            Product("PR003", "Trotinette Dualtron2", 4889.0, 6888.0, R.drawable.trotinette, 12,"new trotinette"),
-            Product("PR006", "Samsung TV", 3790.0, 4589.0, imageResId = R.drawable.tvsamsung, 19,"new Smasung TV"),
-            Product("PR007", "Upcoming product", 0.0, 0.0, R.drawable.placeholder, 10, "new product"),
-            Product("PR008", "Digital Logo Product", 50.0, 200.0, R.drawable.logo, 16, "Digital product"),
-        )
+    class ProductRepository @Inject constructor(
+        private val api: ProductApi
+    ) {
+        suspend fun getProducts(): List<Product> {
+            return try {
+                api.getProducts().map { product ->
+                    product.copy(
+                        imageResId = mapProductImage(product.id)
+                    )
+                }
+            } catch (e: Exception) {
+                emptyList()
+            }
+        }
+
+        private fun mapProductImage(productId: String): Int {
+            return when (productId) {
+                "PR001" -> R.drawable.iphone14
+                "PR002" -> R.drawable.samsungtab
+                "PR003" -> R.drawable.trotinette
+                "PR006" -> R.drawable.tvsamsung
+                "PR008" -> R.drawable.logo
+                else -> R.drawable.placeholder
+            }
+        }
+
+        suspend fun getProductById(id: String): Product? {
+            return try {
+                val product = api.getProducts().find { it.id == id }?.copy(
+                    imageResId = mapProductImage(id)
+                )
+                if (product == null) {
+                    Log.w("ProductRepository", "Product with id $id not found")
+                }
+                product
+            } catch (e: Exception) {
+                Log.e("ProductRepository", "Error fetching product $id: ${e.message}", e)
+                null
+            }
+        }
     }
-    suspend fun getProductById(id: String): Product? {
-        return getProducts().find { it.id == id }
-    }
-}

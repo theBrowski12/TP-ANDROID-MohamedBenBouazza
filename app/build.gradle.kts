@@ -59,6 +59,13 @@ dependencies {
 
     // Navigation
     implementation(libs.androidx.navigation.compose)
+    // Retrofit
+    implementation("com.squareup.retrofit2:retrofit:3.0.0")
+    implementation("com.squareup.retrofit2:converter-gson:3.0.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
+
+    // OkHttp pour logging
+    implementation("com.squareup.okhttp3:logging-interceptor:4.9.3")
 
     // Hilt
     implementation(libs.hilt.android)

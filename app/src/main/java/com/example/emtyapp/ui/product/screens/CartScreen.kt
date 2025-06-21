@@ -27,7 +27,10 @@ import androidx.navigation.NavController
 import com.example.emtyapp.data.Entities.CartItem
 import com.example.emtyapp.ui.product.ProductIntent
 import com.example.emtyapp.ui.product.ProductViewModel
+import com.example.emtyapp.ui.product.openWhatsAppWithMessage
 import dagger.hilt.android.lifecycle.HiltViewModel
+import android.content.Context
+import androidx.compose.ui.platform.LocalContext
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -35,9 +38,15 @@ fun CartScreen(
     navController: NavController,
     viewModel: ProductViewModel
 ) {
+    val context = LocalContext.current
     val cartItems by viewModel.cartItems.collectAsState()
     val totalPrice by viewModel.cartTotal.collectAsState()
-
+    val whatsappMessage = buildString {
+        append("Bonjour, je suis intéressé par les produits :\n")
+        cartItems.forEach { item ->
+            append("- ${item.product.name} (Quantité: ${item.quantity})\n")
+        }
+    }
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -67,7 +76,13 @@ fun CartScreen(
                         fontWeight = FontWeight.Bold
                     )
                     Button(
-                        onClick = { /* Handle checkout */ },
+                        onClick = {
+                            openWhatsAppWithMessage(
+                                context = context,
+                                phoneNumber = "0646564984", // Replace with your number
+                                message = whatsappMessage
+                            )
+                        },
                         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2E7D32))
                     ) {
                         Text("Valider la commande")

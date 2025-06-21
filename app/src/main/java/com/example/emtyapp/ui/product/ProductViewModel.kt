@@ -70,9 +70,27 @@ class ProductViewModel @Inject constructor(
         }
     }
 
+    // In ProductViewModel
     fun loadProductById(id: String) {
         viewModelScope.launch {
-            _selectedProduct.value = repository.getProductById(id)
+            _state.update { it.copy(isLoading = true, error = null) }
+            try {
+                val product = repository.getProductById(id)
+                _state.update {
+                    it.copy(
+                        isLoading = false,
+                        selectedProduct = product,
+                        error = if (product == null) "Product not found" else null
+                    )
+                }
+            } catch (e: Exception) {
+                _state.update {
+                    it.copy(
+                        isLoading = false,
+                        error = e.message ?: "Failed to load product"
+                    )
+                }
+            }
         }
     }
 

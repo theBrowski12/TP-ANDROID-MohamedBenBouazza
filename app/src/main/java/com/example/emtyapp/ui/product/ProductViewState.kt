@@ -7,5 +7,6 @@ data class  ProductViewState(
     val isLoading: Boolean = false,
     val products: List<Product> = emptyList(),
     val cartItems: List<Product> = emptyList(),
-    val error: String? = null
+    val error: String? = null,
+    val selectedProduct: Product? = null
 )
