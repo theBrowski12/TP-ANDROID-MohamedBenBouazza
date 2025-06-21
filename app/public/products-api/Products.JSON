@@ -18,5 +18,45 @@
     "productQuantity": 8,
     "productDescription": "new tablette samsung",
     "productCategory": "Tablette"
+  },
+  {
+    "productID": "PR003",
+    "productTitle": "Trotinette Dualtron2",
+    "productPrice": 4889.0,
+    "productOldPrice": 6888.0,
+    "productImageResId": 0,
+    "productQuantity": 12,
+    "productDescription": "new trotinette",
+    "productCategory": "Trotinette"
+  },
+  {
+    "productID": "PR006",
+    "productTitle": "Samsung TV",
+    "productPrice": 3790.0,
+    "productOldPrice": 4589.0,
+    "productImageResId": 0,
+    "productQuantity": 19,
+    "productDescription": "new Samsung TV",
+    "productCategory": "TV"
+  },
+  {
+    "productID": "PR007",
+    "productTitle": "Upcoming product",
+    "productPrice": 0.0,
+    "productOldPrice": 0.0,
+    "productImageResId": 0,
+    "productQuantity": 10,
+    "productDescription": "new product",
+    "productCategory": "Upcoming"
+  },
+  {
+    "productID": "PR008",
+    "productTitle": "Digital Logo Product",
+    "productPrice": 50.0,
+    "productOldPrice": 200.0,
+    "productImageResId": 0,
+    "productQuantity": 16,
+    "productDescription": "Digital product",
+    "productCategory": "Digital"
   }
 ]
