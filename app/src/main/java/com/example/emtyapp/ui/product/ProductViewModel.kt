@@ -12,11 +12,13 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-
 @HiltViewModel
 class ProductViewModel @Inject constructor(
     private val repository: ProductRepository
 ) : ViewModel() {
+
+    // Store all products for search functionality
+    private var _allProducts: List<Product> = emptyList()
 
     // Selected product for details view
     private val _selectedProduct = MutableStateFlow<Product?>(null)
@@ -38,12 +40,14 @@ class ProductViewModel @Inject constructor(
             is ProductIntent.LoadProducts -> {
                 viewModelScope.launch {
                     loadProducts()
-                }}
+                }
+            }
             is ProductIntent.AddToCart -> addToCart(intent.productId)
             is ProductIntent.RemoveFromCart -> removeFromCart(intent.productId)
             is ProductIntent.ClearCart -> clearCart()
             is ProductIntent.IncrementQuantity -> updateQuantity(intent.productId, 1)
             is ProductIntent.DecrementQuantity -> updateQuantity(intent.productId, -1)
+            is ProductIntent.SearchProducts -> searchProducts(intent.query)
         }
     }
 
@@ -52,6 +56,7 @@ class ProductViewModel @Inject constructor(
             _state.update { it.copy(isLoading = true, error = null) }
             try {
                 val products = repository.getProducts()
+                _allProducts = products // Store all products for searching
                 _state.update {
                     it.copy(
                         isLoading = false,
@@ -70,7 +75,23 @@ class ProductViewModel @Inject constructor(
         }
     }
 
-    // In ProductViewModel
+    private fun searchProducts(query: String) {
+        if (query.isEmpty()) {
+            // If search is empty, show all products
+            _state.update { it.copy(products = _allProducts) }
+        } else {
+            // Filter products based on search query
+            _state.update {
+                it.copy(
+                    products = _allProducts.filter { product ->
+                        product.name.contains(query, ignoreCase = true) ||
+                                (product.description?.contains(query, ignoreCase = true) ?: false)
+                    }
+                )
+            }
+        }
+    }
+
     fun loadProductById(id: String) {
         viewModelScope.launch {
             _state.update { it.copy(isLoading = true, error = null) }
@@ -121,7 +142,7 @@ class ProductViewModel @Inject constructor(
     }
 
     private fun clearCart() {
-        _state.update { it.copy(cartItems = emptyList()) }
+        _cartItems.update { emptyList() }
         _cartTotal.value = 0.0
     }
 
@@ -143,7 +164,6 @@ class ProductViewModel @Inject constructor(
         _cartTotal.value = _cartItems.value.sumOf { it.product.price * it.quantity }
     }
 
-    // Helper function to get cart item count for badge
     fun getCartItemCount(): Int {
         return _cartItems.value.sumOf { it.quantity }
     }

@@ -7,5 +7,7 @@ sealed class ProductIntent {
     data class RemoveFromCart(val productId: String) : ProductIntent()
     data class IncrementQuantity(val productId: String) : ProductIntent()
     data class DecrementQuantity(val productId: String) : ProductIntent()
+    data class SearchProducts(val query: String) : ProductIntent()
+
     object ClearCart : ProductIntent()
 }

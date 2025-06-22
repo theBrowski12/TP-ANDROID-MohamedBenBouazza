@@ -8,6 +8,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.emtyapp.data.Repository.ProductRepository
+import com.example.emtyapp.ui.auth.LoginScreen
+import com.example.emtyapp.ui.auth.RegisterScreen
 import com.example.emtyapp.ui.product.ProductIntent
 import com.example.emtyapp.ui.product.component.DetailsScreen
 import com.example.emtyapp.ui.product.screens.HomeScreen
@@ -18,6 +20,8 @@ object Routes {
     const val Home = "home"
     const val ProductDetails = "productDetails"
     const val Cart = "cart"
+    const val Login = "login"  // Added
+    const val Register = "register"  // Added
 }
 
 @Composable
@@ -32,6 +36,12 @@ fun AppNavigation(viewModel: ProductViewModel= hiltViewModel()) {
             },
                 onNavigateToCart = {
                     navController.navigate(Routes.Cart) // Fix: Navigate to cart
+                },
+                onNavigateToLogin = {
+                    navController.navigate(Routes.Login)  // Fixed to navigate to login
+                },
+                onNavigateToRegister = {
+                    navController.navigate(Routes.Register)  // Fixed to navigate to register
                 })
         }
 
@@ -53,6 +63,51 @@ fun AppNavigation(viewModel: ProductViewModel= hiltViewModel()) {
             CartScreen(navController = navController,
                 viewModel = viewModel) // )
         }
+        // In your NavGraph file
+        composable(Routes.Login) {
+            LoginScreen(
+                onLoginSuccess = {
+                    navController.popBackStack()  // Goes back to previous screen
+                    navController.navigate(Routes.Home)  // Then goes to home
+                },
+                onNavigateToRegister = {
+                    navController.navigate(Routes.Register)
+                }
+            )
+        }
 
+        composable(Routes.Register) {
+            RegisterScreen(
+                onRegisterSuccess = {
+                    navController.popBackStack()  // Goes back to login
+                    navController.navigate(Routes.Login)
+                },
+                onNavigateToLogin = {
+                    navController.popBackStack()  // Goes back to login
+                }
+            )
+        }
+        composable("${Routes.ProductDetails}/{productId}") { backStackEntry ->
+            val productId = backStackEntry.arguments?.getString("productId") ?: ""
+            DetailsScreen(
+                productId = productId,
+                viewModel = viewModel,
+                onBuy = {
+                    navController.navigate(Routes.Cart)
+                },
+                onLoginClick = { navController.navigate(Routes.Login) },
+                onRegisterClick = { navController.navigate(Routes.Register) },
+                onHomeClick = {
+                    navController.popBackStack(Routes.Home, inclusive = false)
+                },
+                onProfileClick = {
+                    // Navigate to profile screen
+                    //navController.navigate(Routes.Profile)
+                },
+                onCartClick = {
+                    navController.navigate(Routes.Cart)
+                }
+            )
+        }
     }
 }

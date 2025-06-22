@@ -7,12 +7,16 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,183 +30,263 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.emtyapp.ui.product.ProductIntent
 import com.example.emtyapp.ui.product.ProductViewModel
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailsScreen(
     productId: String,
     viewModel: ProductViewModel = hiltViewModel(),
-    onBuy: () -> Unit
+    onBuy: () -> Unit,
+    onLoginClick: () -> Unit = {},
+    onRegisterClick: () -> Unit = {},
+    onHomeClick: () -> Unit = {},  // New navigation callback
+    onProfileClick: () -> Unit = {},  // New navigation callback
+    onCartClick: () -> Unit = {}  // New navigation callback
 ) {
-    // Collect the entire state from ViewModel
     val state by viewModel.state.collectAsState()
+    val cartItemCount by remember { derivedStateOf { viewModel.getCartItemCount() } }
 
-    // Load product when screen opens or productId changes
     LaunchedEffect(productId) {
         viewModel.loadProductById(productId)
     }
 
-    // Handle different states
-    when {
-        state.isLoading -> {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                CircularProgressIndicator()
-            }
-        }
-        state.error != null -> {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = state.error ?: "Error loading product",
-                    color = MaterialTheme.colorScheme.error
-                )
-            }
-        }
-        state.selectedProduct == null -> {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                Text("Product not found")
-            }
-        }
-        else -> {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .verticalScroll(rememberScrollState())
-                    .background(Color(0xFFE8F5E9))
-                    .padding(16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                // Product Image Card
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(180.dp),
-                    shape = RoundedCornerShape(16.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color.White),
-                    elevation = CardDefaults.cardElevation(6.dp)
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(12.dp),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Image(
-                            painter = painterResource(id = state.selectedProduct!!.imageResId),
-                            contentDescription = state.selectedProduct!!.name,
-                            contentScale = ContentScale.Fit,
-                            modifier = Modifier.fillMaxSize()
-                        )
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(
+                        text = "Détails Produit",
+                        color = Color(0xFF0288D1),
+                        style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold)
+                    )
+
+
+                },
+                actions = {
+                    TextButton(onClick = onLoginClick) {
+                        Text("Login", color = Color(0xFF0288D1))
                     }
-                }
-
-                Spacer(modifier = Modifier.height(20.dp))
-
-                // Product Name
-                Text(
-                    text = state.selectedProduct!!.name,
-                    style = MaterialTheme.typography.headlineSmall.copy(
-                        fontWeight = FontWeight.Bold,
-                        color = Color(0xFF2E7D32)
-                    ),
-                    textAlign = TextAlign.Center
-                )
-
-                Spacer(modifier = Modifier.height(8.dp))
-
-                // Price
-                Text(
-                    text = "${state.selectedProduct!!.price} DH",
-                    style = MaterialTheme.typography.titleMedium.copy(
-                        fontWeight = FontWeight.Bold,
-                        color = Color(0xFF4CAF50)
-                    )
-                )
-
-                // Old Price
-                Text(
-                    text = "${state.selectedProduct!!.oldPrice} DH",
-                    style = MaterialTheme.typography.bodyMedium.copy(
-                        color = Color.Gray,
-                        textDecoration = TextDecoration.LineThrough
-                    )
-                )
-
-                Spacer(modifier = Modifier.height(12.dp))
-
-                // Stock Information
+                    Spacer(modifier = Modifier.width(4.dp))
+                    TextButton(onClick = onRegisterClick) {
+                        Text("Register", color = Color(0xFF00ACC1))
+                    }
+                    Spacer(modifier = Modifier.width(8.dp))
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = Color.Transparent
+                ),
+                modifier = Modifier.background(Color.White.copy(alpha = 0.95f))
+            )
+        },
+        bottomBar = {
+            BottomAppBar(
+                containerColor = Color(0xFFF0FBFF) // Light blue background
+            ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
+                    horizontalArrangement = Arrangement.SpaceAround
                 ) {
-                    val quantityColor = if (state.selectedProduct!!.quantity < 10) Color.Red else Color(0xFF2E7D32)
-                    Text(
-                        text = "Disponible : ${state.selectedProduct!!.quantity} unités",
-                        style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium),
-                        color = quantityColor
-                    )
-
-                    if (state.selectedProduct!!.quantity < 10) {
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text(
-                            text = "⚠️ Stock faible",
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = Color(0xFFFFA000),
-                            fontWeight = FontWeight.SemiBold
+                    // Home Button
+                    IconButton(onClick = onHomeClick) {
+                        Icon(
+                            Icons.Default.Home,
+                            contentDescription = "Home",
+                            tint = Color(0xFF0288D1) // Blue color
                         )
                     }
+
+                    // Profile Button
+                    IconButton(onClick = onProfileClick) {
+                        Icon(
+                            Icons.Default.Person,
+                            contentDescription = "Profile",
+                            tint = Color(0xFF0288D1) // Blue color
+                        )
+                    }
+
+                    // Cart Button with Badge
+                    IconButton(onClick = onCartClick) {
+                        BadgedBox(
+                            badge = {
+                                if (cartItemCount > 0) {
+                                    Badge {
+                                        Text(
+                                            cartItemCount.toString(),
+                                            color = Color.Black
+                                        )
+                                    }
+                                }
+                            }
+                        ) {
+                            Icon(
+                                Icons.Default.ShoppingCart,
+                                contentDescription = "Cart",
+                                tint = Color(0xFF0288D1)
+                            )
+                        }
+                    }
                 }
+            }
+        },
+        containerColor = Color(0xFFF0FBFF)
+    ) { innerPadding ->
 
-                Spacer(modifier = Modifier.height(20.dp))
+        when {
+            state.isLoading -> {
+                Box(modifier = Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator(color = Color(0xFF00BCD4))
+                }
+            }
 
-                // Description
-                Column(
-                    modifier = Modifier.fillMaxWidth()
+            state.error != null -> {
+                Box(modifier = Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding),
+                    contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = "Description",
-                        style = MaterialTheme.typography.titleMedium.copy(
-                            fontWeight = FontWeight.SemiBold,
-                            color = Color(0xFF1B5E20)
+                        text = state.error ?: "Erreur de chargement",
+                        color = Color(0xFFE53935),
+                        style = MaterialTheme.typography.titleMedium
+                    )
+                }
+            }
+
+            state.selectedProduct == null -> {
+                Box(modifier = Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text("Produit introuvable", color = Color.Gray)
+                }
+            }
+
+            else -> {
+                val product = state.selectedProduct!!
+
+                Column(
+                    modifier = Modifier
+                        .padding(innerPadding)
+                        .verticalScroll(rememberScrollState())
+                        .padding(16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+
+                    Card(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(200.dp),
+                        shape = RoundedCornerShape(20.dp),
+                        colors = CardDefaults.cardColors(containerColor = Color.White),
+                        elevation = CardDefaults.cardElevation(8.dp)
+                    ) {
+                        Box(contentAlignment = Alignment.Center) {
+                            Image(
+                                painter = painterResource(id = product.imageResId),
+                                contentDescription = product.name,
+                                contentScale = ContentScale.Fit,
+                                modifier = Modifier.fillMaxSize()
+                            )
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(20.dp))
+
+                    Text(
+                        text = product.name,
+                        style = MaterialTheme.typography.headlineSmall.copy(
+                            fontWeight = FontWeight.Bold,
+                            color = Color(0xFF01579B)
+                        ),
+                        textAlign = TextAlign.Center
+                    )
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    Text(
+                        text = "${product.price} MAD",
+                        style = MaterialTheme.typography.titleLarge.copy(
+                            fontWeight = FontWeight.Bold,
+                            color = Color(0xFF00C853)
                         )
                     )
 
-                    Spacer(modifier = Modifier.height(4.dp))
+                    if (product.oldPrice > product.price) {
+                        Text(
+                            text = "${product.oldPrice} MAD",
+                            style = MaterialTheme.typography.bodyMedium.copy(
+                                color = Color.Gray,
+                                textDecoration = TextDecoration.LineThrough
+                            )
+                        )
+                    }
 
-                    Text(
-                        text = state.selectedProduct!!.description,
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = Color.DarkGray
-                    )
-                }
+                    Spacer(modifier = Modifier.height(12.dp))
 
-                Spacer(modifier = Modifier.height(24.dp))
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        val quantityColor = if (product.quantity < 10) Color.Red else Color(0xFF00C853)
+                        Text(
+                            text = "Disponible : ${product.quantity} unités",
+                            style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium),
+                            color = quantityColor
+                        )
+                        if (product.quantity < 10) {
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Text(
+                                text = "⚠️ Stock faible",
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = Color(0xFFFFA000),
+                                fontWeight = FontWeight.SemiBold
+                            )
+                        }
+                    }
 
-                // Buy Button
-                Button(
-                    onClick = {
-                        viewModel.handleIntent(ProductIntent.AddToCart(productId))
-                        onBuy()
-                    },
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF81C784)),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(50.dp),
-                    shape = RoundedCornerShape(12.dp)
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.ShoppingCart,
-                        contentDescription = "Acheter",
-                        tint = Color.White
-                    )
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text("Acheter", color = Color.White)
+                    Spacer(modifier = Modifier.height(24.dp))
+
+                    Column(modifier = Modifier.fillMaxWidth()) {
+                        Text(
+                            text = "Description",
+                            style = MaterialTheme.typography.titleMedium.copy(
+                                fontWeight = FontWeight.Bold,
+                                color = Color(0xFF0288D1)
+                            )
+                        )
+                        Spacer(modifier = Modifier.height(6.dp))
+                        Text(
+                            text = product.description,
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = Color(0xFF455A64)
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.height(30.dp))
+
+                    Button(
+                        onClick = {
+                            viewModel.handleIntent(ProductIntent.AddToCart(productId))
+                            onBuy()
+                        },
+                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF00BCD4)),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(50.dp),
+                        shape = RoundedCornerShape(14.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.ShoppingCart,
+                            contentDescription = "Acheter",
+                            tint = Color.White
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text("Acheter", color = Color.White)
+                    }
                 }
             }
         }

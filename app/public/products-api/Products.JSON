@@ -6,57 +6,127 @@
     "productOldPrice": 7999.0,
     "productImageResId": 0,
     "productQuantity": 5,
-    "productDescription": "new iPhone 14",
-    "productCategory": "Smartphone"
+    "productDescription": "iPhone 14 avec puce A15 Bionic, écran Super Retina XDR 6.1\", caméra avancée avec mode cinématique.",
+    "productCategory": "Electroniques"
   },
   {
     "productID": "PR002",
-    "productTitle": "Tablette Samsung",
+    "productTitle": "Tablette Samsung Galaxy Tab S7",
     "productPrice": 2500.0,
     "productOldPrice": 5888.0,
     "productImageResId": 0,
     "productQuantity": 8,
-    "productDescription": "new tablette samsung",
-    "productCategory": "Tablette"
+    "productDescription": "Tablette 11\" WQXGA avec S-Pen inclus, processeur Snapdragon 865+, idéale pour le travail et le multimédia.",
+    "productCategory": "Electroniques"
   },
   {
     "productID": "PR003",
-    "productTitle": "Trotinette Dualtron2",
+    "productTitle": "Trottinette Électrique Dualtron 2",
     "productPrice": 4889.0,
     "productOldPrice": 6888.0,
     "productImageResId": 0,
     "productQuantity": 12,
-    "productDescription": "new trotinette",
-    "productCategory": "Trotinette"
+    "productDescription": "Trottinette puissante 2400W avec suspension hydraulique, autonomie de 80 km, adaptée aux trajets urbains.",
+    "productCategory": "Véhicules"
   },
   {
     "productID": "PR006",
-    "productTitle": "Samsung TV",
+    "productTitle": "Samsung Smart TV 50\" 4K",
     "productPrice": 3790.0,
     "productOldPrice": 4589.0,
     "productImageResId": 0,
     "productQuantity": 19,
-    "productDescription": "new Samsung TV",
-    "productCategory": "TV"
+    "productDescription": "Téléviseur 4K UHD avec HDR10+, Smart Hub intégré, compatibilité avec Bixby, Alexa et Google Assistant.",
+    "productCategory": "Electroniques"
   },
   {
     "productID": "PR007",
-    "productTitle": "Upcoming product",
+    "productTitle": "Produit Bientôt Disponible",
     "productPrice": 0.0,
     "productOldPrice": 0.0,
     "productImageResId": 0,
     "productQuantity": 10,
-    "productDescription": "new product",
+    "productDescription": "Produit innovant en cours de préparation, restez connectés pour plus de détails très bientôt.",
     "productCategory": "Upcoming"
   },
   {
     "productID": "PR008",
-    "productTitle": "Digital Logo Product",
+    "productTitle": "Pack Logo Digital HD",
     "productPrice": 50.0,
     "productOldPrice": 200.0,
     "productImageResId": 0,
     "productQuantity": 16,
-    "productDescription": "Digital product",
+    "productDescription": "Fichier logo vectoriel + déclinaisons HD, formats PSD, PNG et SVG pour impression et web.",
     "productCategory": "Digital"
+  },
+  {
+    "productID": "PR009",
+    "productTitle": "Montre Fossil Homme Chrono",
+    "productPrice": 850.0,
+    "productOldPrice": 1099.0,
+    "productImageResId": 0,
+    "productQuantity": 6,
+    "productDescription": "Montre chronographe avec boîtier inox, bracelet cuir marron et étanchéité 5 ATM.",
+    "productCategory": "Montres"
+  },
+  {
+    "productID": "PR010",
+    "productTitle": "Collier Or 18K Femme",
+    "productPrice": 3200.0,
+    "productOldPrice": 4500.0,
+    "productImageResId": 0,
+    "productQuantity": 3,
+    "productDescription": "Collier fin en or jaune 18 carats avec pendentif cœur serti de zirconium, finition brillante.",
+    "productCategory": "Joaillerie"
+  },
+  {
+    "productID": "PR011",
+    "productTitle": "Vélo Électrique Urban E-Ride",
+    "productPrice": 6900.0,
+    "productOldPrice": 7890.0,
+    "productImageResId": 0,
+    "productQuantity": 7,
+    "productDescription": "Vélo électrique 250W, batterie lithium amovible 36V, autonomie 60 km, cadre alu léger.",
+    "productCategory": "Véhicules"
+  },
+  {
+    "productID": "PR012",
+    "productTitle": "Caméra GoPro Hero 11",
+    "productPrice": 4590.0,
+    "productOldPrice": 5200.0,
+    "productImageResId": 0,
+    "productQuantity": 9,
+    "productDescription": "Caméra 5.3K 60fps, stabilisation HyperSmooth 5.0, étanche 10m, écran tactile avant/arrière.",
+    "productCategory": "Véhicules"
+  },
+  {
+    "productID": "PR013",
+    "productTitle": "Blazer Homme Slim Fit",
+    "productPrice": 499.0,
+    "productOldPrice": 699.0,
+    "productImageResId": 0,
+    "productQuantity": 25,
+    "productDescription": "Blazer élégant coupe slim, tissu extensible, parfait pour les occasions formelles et casual chic.",
+    "productCategory": "Homme"
+  },
+  {
+    "productID": "PR014",
+    "productTitle": "Robe Femme Évasée",
+    "productPrice": 329.0,
+    "productOldPrice": 499.0,
+    "productImageResId": 0,
+    "productQuantity": 18,
+    "productDescription": "Robe midi en coton léger, col en V, manches 3/4, parfaite pour l'été ou les soirées décontractées.",
+    "productCategory": "Femme"
+  },
+  {
+    "productID": "PR015",
+    "productTitle": "Casque Moto Électrique Axxis",
+    "productPrice": 780.0,
+    "productOldPrice": 999.0,
+    "productImageResId": 0,
+    "productQuantity": 13,
+    "productDescription": "Casque intégral homologué avec visière anti-rayures, doublure lavable, compatible Bluetooth.",
+    "productCategory": "Véhicules"
   }
 ]
