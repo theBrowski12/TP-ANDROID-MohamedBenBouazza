@@ -3,6 +3,8 @@ package com.example.emtyapp.ui.product.screens
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Home
@@ -21,6 +23,8 @@ import com.example.emtyapp.R
 import com.example.emtyapp.ui.product.ProductIntent
 import com.example.emtyapp.ui.product.ProductViewModel
 import com.example.emtyapp.ui.product.component.ProductsList
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material3.FilterChipDefaults
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -35,6 +39,18 @@ fun HomeScreen(
     val cartItemCount by remember { derivedStateOf { viewModel.getCartItemCount() } }
     var searchQuery by remember { mutableStateOf("") }
     var isSearchActive by remember { mutableStateOf(false) }
+    val categories = listOf(
+        "Tous",
+        "Électroniques",
+        "Véhicules",
+        "Digital",
+        "Montres",
+        "Joaillerie",
+        "Homme",
+        "Femme",
+        "Upcoming"
+    )
+    var selectedCategory by remember { mutableStateOf("Tous") }
 
     LaunchedEffect(viewModel) {
         viewModel.handleIntent(ProductIntent.LoadProducts)
@@ -46,6 +62,13 @@ fun HomeScreen(
         } else if (searchQuery.isEmpty()) {
             viewModel.handleIntent(ProductIntent.LoadProducts)
         }
+    }
+
+    LaunchedEffect(selectedCategory) {
+        viewModel.handleIntent(
+            if (selectedCategory == "Tous") ProductIntent.LoadProducts
+            else ProductIntent.FilterByCategory(selectedCategory)
+        )
     }
 
     Scaffold(
@@ -92,7 +115,7 @@ fun HomeScreen(
                                 )
                             )
                         ) {
-                            // Empty content for the dropdown - we're handling search in LaunchedEffect
+                            // Empty content for the dropdown
                         }
                     } else {
                         Row(
@@ -106,9 +129,7 @@ fun HomeScreen(
                                     .size(40.dp)
                                     .padding(end = 8.dp)
                             )
-
                             Spacer(modifier = Modifier.weight(1f))
-
                             IconButton(
                                 onClick = { isSearchActive = true },
                                 modifier = Modifier.padding(end = 8.dp)
@@ -119,7 +140,6 @@ fun HomeScreen(
                                     tint = Color(0xFF00D4FF)
                                 )
                             }
-
                             Row {
                                 TextButton(onClick = onNavigateToLogin) {
                                     Text("LOGIN", color = Color(0xFF00D4FF))
@@ -139,13 +159,13 @@ fun HomeScreen(
         },
         bottomBar = {
             BottomAppBar(
-                containerColor = Color(0xFF001869)
+                containerColor = Color(0xFF00135E)
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceAround
                 ) {
-                    IconButton(onClick = { /* Already on home */ }) {
+                    IconButton(onClick = { /* Home action */ }) {
                         Icon(
                             Icons.Default.Home,
                             contentDescription = "Home",
@@ -159,7 +179,7 @@ fun HomeScreen(
                             tint = Color(0xFF00D4FF)
                         )
                     }
-                    IconButton(onClick = { /* Handle profile */ }) {
+                    IconButton(onClick = { /* Profile action */ }) {
                         Icon(
                             Icons.Default.Person,
                             contentDescription = "Profile",
@@ -190,35 +210,105 @@ fun HomeScreen(
             }
         }
     ) { innerPadding ->
-        Box(
+        Column(
             modifier = Modifier
                 .padding(innerPadding)
                 .background(Color(0xFF3B3B94))
                 .fillMaxSize()
         ) {
-            when {
-                state.isLoading -> CircularProgressIndicator(
-                    modifier = Modifier.align(Alignment.Center),
-                    color = Color(0xFF00D4FF)
-                )
-                state.error != null -> Text(
-                    "Error: ${state.error}",
-                    color = Color(0xFFFF5555),
-                    modifier = Modifier.align(Alignment.Center)
-                )
-                else -> Column {
-                    if (!isSearchActive) {
-
-                    }
-                    ProductsList(
-                        products = state.products,
-                        onNavigateToDetails = onNavigateToDetails,
-                        onAddToCart = { productId ->
-                            viewModel.handleIntent(ProductIntent.AddToCart(productId))
-                        }
+            // Categories Section with LazyRow
+            LazyRow(
+                modifier = Modifier.padding(vertical = 8.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                contentPadding = PaddingValues(horizontal = 16.dp)
+            ) {
+                items(categories) { category ->
+                    CategoryChip(
+                        name = category,
+                        isSelected = category == selectedCategory,
+                        onClick = { selectedCategory = category }
                     )
+                }
+            }
+
+            // Products Section
+            Box(
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxSize()
+            ) {
+                when {
+                    state.isLoading -> CircularProgressIndicator(
+                        modifier = Modifier.align(Alignment.Center),
+                        color = Color(0xFF00D4FF)
+                    )
+                    state.error != null -> Text(
+                        "Error: ${state.error}",
+                        color = Color(0xFFFF5555),
+                        modifier = Modifier.align(Alignment.Center)
+                    )
+                    else -> Column {
+                        if (!isSearchActive) {
+
+                        }
+                        ProductsList(
+                            products = state.products,
+                            onNavigateToDetails = onNavigateToDetails,
+                            onAddToCart = { productId ->
+                                viewModel.handleIntent(ProductIntent.AddToCart(productId))
+                            }
+                        )
+                    }
                 }
             }
         }
     }
+}
+
+@Composable
+fun CategoryChip(
+    name: String,
+    isSelected: Boolean,
+    onClick: () -> Unit
+) {
+    FilterChip(
+        selected = isSelected,
+        onClick = onClick,
+        enabled = true,  // Added enabled parameter
+        label = {
+            Text(
+                text = name,
+                modifier = Modifier.padding(horizontal = 8.dp)
+            )
+        },
+        leadingIcon = if (isSelected) {
+            @Composable {
+                Icon(
+                    imageVector = Icons.Default.Check,
+                    contentDescription = "Selected",
+                    modifier = Modifier.size(FilterChipDefaults.IconSize)
+                )
+            }
+        } else {
+            null
+        },
+        colors = FilterChipDefaults.filterChipColors(
+            selectedContainerColor = Color(0xFF00D4FF),
+            selectedLabelColor = Color.Black,
+            containerColor = Color(0xFF2A2A3A),
+            labelColor = Color.White,
+            disabledContainerColor = Color.LightGray,
+            disabledLabelColor = Color.DarkGray
+        ),
+        border = FilterChipDefaults.filterChipBorder(
+            borderColor = if (isSelected) Color(0xFF00D4FF) else Color.Transparent,
+            disabledBorderColor = Color.Gray,
+            selectedBorderColor = Color(0xFF00D4FF),
+            borderWidth = 1.dp,
+            selected = true,
+            enabled = true
+        ),
+        shape = MaterialTheme.shapes.small,
+        modifier = Modifier.padding(4.dp)
+    )
 }

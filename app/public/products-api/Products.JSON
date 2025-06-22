@@ -7,7 +7,7 @@
     "productImageResId": 0,
     "productQuantity": 5,
     "productDescription": "iPhone 14 avec puce A15 Bionic, écran Super Retina XDR 6.1\", caméra avancée avec mode cinématique.",
-    "productCategory": "Electroniques"
+    "productCategory": "Électroniques"
   },
   {
     "productID": "PR002",
@@ -17,7 +17,7 @@
     "productImageResId": 0,
     "productQuantity": 8,
     "productDescription": "Tablette 11\" WQXGA avec S-Pen inclus, processeur Snapdragon 865+, idéale pour le travail et le multimédia.",
-    "productCategory": "Electroniques"
+    "productCategory": "Électroniques"
   },
   {
     "productID": "PR003",
@@ -37,7 +37,7 @@
     "productImageResId": 0,
     "productQuantity": 19,
     "productDescription": "Téléviseur 4K UHD avec HDR10+, Smart Hub intégré, compatibilité avec Bixby, Alexa et Google Assistant.",
-    "productCategory": "Electroniques"
+    "productCategory": "Électroniques"
   },
   {
     "productID": "PR008",
@@ -87,7 +87,7 @@
     "productImageResId": 0,
     "productQuantity": 9,
     "productDescription": "Caméra 5.3K 60fps, stabilisation HyperSmooth 5.0, étanche 10m, écran tactile avant/arrière.",
-    "productCategory": "Véhicules"
+    "productCategory": "Électroniques"
   },
   {
     "productID": "PR013",
@@ -117,7 +117,7 @@
     "productImageResId": 0,
     "productQuantity": 13,
     "productDescription": "Casque intégral homologué avec visière anti-rayures, doublure lavable, compatible Bluetooth.",
-    "productCategory": "Véhicules"
+    "productCategory": "Électroniques"
   },
   {
     "productID": "HM001",

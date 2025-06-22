@@ -48,6 +48,13 @@ class ProductViewModel @Inject constructor(
             is ProductIntent.IncrementQuantity -> updateQuantity(intent.productId, 1)
             is ProductIntent.DecrementQuantity -> updateQuantity(intent.productId, -1)
             is ProductIntent.SearchProducts -> searchProducts(intent.query)
+            is ProductIntent.FilterByCategory -> {
+                _state.value = _state.value.copy(
+                    products = _allProducts.filter {
+                        it.category.equals(intent.category, ignoreCase = true)
+                    }
+                )
+            }
         }
     }
 
