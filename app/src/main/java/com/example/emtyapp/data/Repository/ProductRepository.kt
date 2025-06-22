@@ -29,10 +29,33 @@ import kotlin.math.log
                 "PR002" -> R.drawable.samsungtab
                 "PR003" -> R.drawable.trotinette
                 "PR006" -> R.drawable.tvsamsung
+                "PR007" -> R.drawable.upcoming
                 "PR008" -> R.drawable.logo
+                "PR009" -> R.drawable.montre_fossil
+                "PR010" -> R.drawable.collier_or
+                "PR011" -> R.drawable.velo_electrique
+                "PR012" -> R.drawable.gopro
+                "PR013" -> R.drawable.blazer_homme
+                "PR014" -> R.drawable.robe_femme
+                "PR015" -> R.drawable.casque_moto
+
+                "HM001" -> R.drawable.veste_jean
+                "HM002" -> R.drawable.polo_lacoste
+                "HM003" -> R.drawable.nike_airmax
+                "HM004" -> R.drawable.tshirt_graphique
+                "HM005" -> R.drawable.montre_casio
+                "HM006" -> R.drawable.blouson_cuir
+                "FM001" -> R.drawable.robe_fleurie
+                "FM002" -> R.drawable.sac_cuir_camel
+                "FM003" -> R.drawable.talons_noirs
+                "FM004" -> R.drawable.ensemble_sport
+                "FM005" -> R.drawable.montre_doree
+                "FM006" -> R.drawable.blazer_femme
+
                 else -> R.drawable.placeholder
             }
         }
+
 
         suspend fun getProductById(id: String): Product? {
             return try {

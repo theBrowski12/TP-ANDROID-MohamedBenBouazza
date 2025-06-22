@@ -40,16 +40,6 @@
     "productCategory": "Electroniques"
   },
   {
-    "productID": "PR007",
-    "productTitle": "Produit Bientôt Disponible",
-    "productPrice": 0.0,
-    "productOldPrice": 0.0,
-    "productImageResId": 0,
-    "productQuantity": 10,
-    "productDescription": "Produit innovant en cours de préparation, restez connectés pour plus de détails très bientôt.",
-    "productCategory": "Upcoming"
-  },
-  {
     "productID": "PR008",
     "productTitle": "Pack Logo Digital HD",
     "productPrice": 50.0,
@@ -128,5 +118,135 @@
     "productQuantity": 13,
     "productDescription": "Casque intégral homologué avec visière anti-rayures, doublure lavable, compatible Bluetooth.",
     "productCategory": "Véhicules"
+  },
+  {
+    "productID": "HM001",
+    "productTitle": "Veste en Jean Homme",
+    "productPrice": 399.0,
+    "productOldPrice": 499.0,
+    "productImageResId": 0,
+    "productQuantity": 14,
+    "productDescription": "Veste classique en denim bleu avec boutons métalliques, coupe droite, idéale pour l'automne.",
+    "productCategory": "Homme"
+  },
+  {
+    "productID": "HM002",
+    "productTitle": "Polo Lacoste Slim Fit",
+    "productPrice": 549.0,
+    "productOldPrice": 699.0,
+    "productImageResId": 0,
+    "productQuantity": 20,
+    "productDescription": "Polo homme manches courtes en coton piqué avec col classique, logo brodé sur la poitrine.",
+    "productCategory": "Homme"
+  },
+  {
+    "productID": "HM003",
+    "productTitle": "Sneakers Nike Air Max",
+    "productPrice": 899.0,
+    "productOldPrice": 1099.0,
+    "productImageResId": 0,
+    "productQuantity": 9,
+    "productDescription": "Chaussures sport confortables avec semelle Air, design moderne et respirant, couleur noire/grise.",
+    "productCategory": "Homme"
+  },
+  {
+    "productID": "HM004",
+    "productTitle": "T-shirt Graphique Urban",
+    "productPrice": 199.0,
+    "productOldPrice": 249.0,
+    "productImageResId": 0,
+    "productQuantity": 35,
+    "productDescription": "T-shirt à imprimé streetwear, coton doux, col rond, coupe moderne, disponible en plusieurs tailles.",
+    "productCategory": "Homme"
+  },
+  {
+    "productID": "HM005",
+    "productTitle": "Montre Sport Casio",
+    "productPrice": 299.0,
+    "productOldPrice": 399.0,
+    "productImageResId": 0,
+    "productQuantity": 13,
+    "productDescription": "Montre digitale étanche avec chronomètre, alarme et éclairage LED, idéale pour le sport.",
+    "productCategory": "Montres"
+  },
+  {
+    "productID": "HM006",
+    "productTitle": "Blouson Cuir Véritable",
+    "productPrice": 1200.0,
+    "productOldPrice": 1450.0,
+    "productImageResId": 0,
+    "productQuantity": 4,
+    "productDescription": "Blouson en cuir noir 100% véritable, doublure intérieure chaude, fermeture zippée de qualité.",
+    "productCategory": "Homme"
+  },
+  {
+    "productID": "FM001",
+    "productTitle": "Robe Longue Fleurie",
+    "productPrice": 429.0,
+    "productOldPrice": 599.0,
+    "productImageResId": 0,
+    "productQuantity": 11,
+    "productDescription": "Robe longue fluide à motifs floraux, col en V, manches courtes, parfaite pour l’été.",
+    "productCategory": "Femme"
+  },
+  {
+    "productID": "FM002",
+    "productTitle": "Sac à Main Cuir Camel",
+    "productPrice": 699.0,
+    "productOldPrice": 850.0,
+    "productImageResId": 0,
+    "productQuantity": 6,
+    "productDescription": "Sac à main en cuir véritable, couleur camel, bandoulière réglable, poches internes zippées.",
+    "productCategory": "Femme"
+  },
+  {
+    "productID": "FM003",
+    "productTitle": "Talons Aiguilles Noirs",
+    "productPrice": 379.0,
+    "productOldPrice": 489.0,
+    "productImageResId": 0,
+    "productQuantity": 17,
+    "productDescription": "Escarpins élégants en simili cuir noir, hauteur 8cm, semelle antidérapante, fermeture discrète.",
+    "productCategory": "Femme"
+  },
+  {
+    "productID": "FM004",
+    "productTitle": "Ensemble de Sport Femme",
+    "productPrice": 299.0,
+    "productOldPrice": 399.0,
+    "productImageResId": 0,
+    "productQuantity": 22,
+    "productDescription": "Ensemble legging + brassière, tissu extensible, respirant et anti-transpiration, idéal fitness et yoga.",
+    "productCategory": "Femme"
+  },
+  {
+    "productID": "FM005",
+    "productTitle": "Montre Femme Dorée",
+    "productPrice": 549.0,
+    "productOldPrice": 699.0,
+    "productImageResId": 0,
+    "productQuantity": 7,
+    "productDescription": "Montre chic dorée à quartz, bracelet en acier inoxydable, boîtier fin et élégant.",
+    "productCategory": "Montres"
+  },
+  {
+    "productID": "FM006",
+    "productTitle": "Blazer Femme Tailleur",
+    "productPrice": 459.0,
+    "productOldPrice": 599.0,
+    "productImageResId": 0,
+    "productQuantity": 10,
+    "productDescription": "Blazer coupe tailleur, tissu fluide, bouton doré, parfait pour look bureau ou soirée.",
+    "productCategory": "Femme"
+  },
+  {
+    "productID": "PR007",
+    "productTitle": "Produit Bientôt Disponible",
+    "productPrice": 0.0,
+    "productOldPrice": 0.0,
+    "productImageResId": 0,
+    "productQuantity": 10,
+    "productDescription": "Produit innovant en cours de préparation, restez connectés pour plus de détails très bientôt.",
+    "productCategory": "Upcoming"
   }
 ]
