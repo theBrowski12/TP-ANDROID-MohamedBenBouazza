@@ -25,20 +25,24 @@ import com.example.emtyapp.ui.product.ProductViewModel
 import com.example.emtyapp.ui.product.component.ProductsList
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.FilterChipDefaults
+import com.example.emtyapp.ui.auth.AuthViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-    viewModel: ProductViewModel = viewModel(),
+    authViewModel: AuthViewModel = viewModel(), // Add this parameter
+    viewModel: ProductViewModel,
     onNavigateToDetails: (String) -> Unit,
     onNavigateToCart: () -> Unit,
     onNavigateToLogin: () -> Unit,
-    onNavigateToRegister: () -> Unit
+    onNavigateToRegister: () -> Unit,
+    onNavigateToProfile: () -> Unit
 ) {
     val state by viewModel.state.collectAsState()
     val cartItemCount by remember { derivedStateOf { viewModel.getCartItemCount() } }
     var searchQuery by remember { mutableStateOf("") }
     var isSearchActive by remember { mutableStateOf(false) }
+    val currentUser by authViewModel.currentUser.collectAsState()
     val categories = listOf(
         "Tous",
         "Électroniques",
@@ -140,13 +144,30 @@ fun HomeScreen(
                                     tint = Color(0xFF00D4FF)
                                 )
                             }
-                            Row {
-                                TextButton(onClick = onNavigateToLogin) {
-                                    Text("LOGIN", color = Color(0xFF00D4FF))
-                                }
-                                TextButton(onClick = onNavigateToRegister) {
-                                    Text("REGISTER", color = Color(0xFF00FF88))
-                                }
+                        }
+                    }
+                },
+                actions = {
+                    if (currentUser != null) {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Text(
+                                text = "Welcome ${currentUser?.name?.take(10) ?: currentUser?.email?.take(10)}",
+                                color = Color(0xFF00D4FF),
+                                maxLines = 1,
+                                modifier = Modifier.padding(end = 8.dp)
+                            )
+                            TextButton(onClick = { authViewModel.logout() }) {
+                                Text("Logout", color = Color(0xFF00ACC1))
+                            }
+                        }
+                    } else {
+                        Row {
+                            TextButton(onClick = onNavigateToLogin) {
+                                Text("Login", color = Color(0xFF00D4FF))
+                            }
+                            Spacer(modifier = Modifier.width(4.dp))
+                            TextButton(onClick = onNavigateToRegister) {
+                                Text("Register", color = Color(0xFF00ACC1))
                             }
                         }
                     }
@@ -179,7 +200,13 @@ fun HomeScreen(
                             tint = Color(0xFF00D4FF)
                         )
                     }
-                    IconButton(onClick = { /* Profile action */ }) {
+                    IconButton(onClick = {
+                        if (authViewModel.currentUser.value != null) {
+                            onNavigateToProfile()
+                        } else {
+                            onNavigateToLogin()
+                        }
+                    }) {
                         Icon(
                             Icons.Default.Person,
                             contentDescription = "Profile",
@@ -252,11 +279,14 @@ fun HomeScreen(
 
                         }
                         ProductsList(
-                            products = state.products,
+                            products = if (selectedCategory == "Tous") state.products
+                            else state.products.filter { it.category == selectedCategory },
                             onNavigateToDetails = onNavigateToDetails,
                             onAddToCart = { productId ->
                                 viewModel.handleIntent(ProductIntent.AddToCart(productId))
-                            }
+                                // Optional: Show snackbar or feedback
+                            },
+                            selectedCategory = selectedCategory
                         )
                     }
                 }

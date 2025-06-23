@@ -40,7 +40,7 @@ import androidx.compose.ui.unit.sp
 fun ProductItem(
     product: Product,
     onNavigateToDetails: (String) -> Unit,
-    onAddToCart: () -> Unit,
+    onAddToCart: (String) -> Unit,  // Changed to accept productId
     modifier: Modifier
 ) {
     Card(
@@ -143,7 +143,7 @@ fun ProductItem(
                     }
 
                     Button(
-                        onClick = onAddToCart,
+                        onClick = { onAddToCart(product.id) },  // Pass the product.id here
                         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF00B8D4))
                     ) {
                         Text("Ajouter", color = Color.White)

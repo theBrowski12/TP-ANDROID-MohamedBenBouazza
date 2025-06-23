@@ -1,6 +1,8 @@
 package com.example.emtyapp.nav
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -8,8 +10,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.emtyapp.data.Repository.ProductRepository
+import com.example.emtyapp.ui.auth.AuthViewModel
 import com.example.emtyapp.ui.auth.LoginScreen
 import com.example.emtyapp.ui.auth.RegisterScreen
+import com.example.emtyapp.ui.auth.Screens.ProfileScreen
 import com.example.emtyapp.ui.product.ProductIntent
 import com.example.emtyapp.ui.product.component.DetailsScreen
 import com.example.emtyapp.ui.product.screens.HomeScreen
@@ -21,17 +25,23 @@ object Routes {
     const val ProductDetails = "productDetails"
     const val Cart = "cart"
     const val Login = "login"  // Added
-    const val Register = "register"  // Added
+    const val Register = "register"
+    const val Profile = "profile"// Added
 }
 
 @Composable
 fun AppNavigation(viewModel: ProductViewModel= hiltViewModel()) {
     val navController = rememberNavController()
+    val authViewModel: AuthViewModel = hiltViewModel()
+    val productViewModel: ProductViewModel = hiltViewModel()
 
     NavHost(navController = navController, startDestination = Routes.Home) {
 
         composable(Routes.Home) {
-            HomeScreen(viewModel = viewModel, onNavigateToDetails = { productId ->
+            HomeScreen(
+                authViewModel = authViewModel,
+                viewModel = viewModel,
+                onNavigateToDetails = { productId ->
                 navController.navigate("${Routes.ProductDetails}/$productId")
             },
                 onNavigateToCart = {
@@ -42,7 +52,9 @@ fun AppNavigation(viewModel: ProductViewModel= hiltViewModel()) {
                 },
                 onNavigateToRegister = {
                     navController.navigate(Routes.Register)  // Fixed to navigate to register
-                })
+                },
+                onNavigateToProfile = { navController.navigate(Routes.Profile) }
+            )
         }
 
         composable(
@@ -64,28 +76,58 @@ fun AppNavigation(viewModel: ProductViewModel= hiltViewModel()) {
                 viewModel = viewModel) // )
         }
         // In your NavGraph file
+        // In AppNavigation.kt
         composable(Routes.Login) {
             LoginScreen(
                 onLoginSuccess = {
-                    navController.popBackStack()  // Goes back to previous screen
-                    navController.navigate(Routes.Home)  // Then goes to home
+                    try {
+                        navController.popBackStack()
+                    } catch (e: Exception) {
+                        navController.navigate(Routes.Home) {
+                            popUpTo(Routes.Home)
+                        }
+                    }
                 },
                 onNavigateToRegister = {
-                    navController.navigate(Routes.Register)
+                    try {
+                        navController.navigate(Routes.Register) {
+                            launchSingleTop = true
+                        }                    }
+                    catch (e: Exception) {
+                        // Handle error
+                    }
                 }
             )
         }
-
         composable(Routes.Register) {
             RegisterScreen(
                 onRegisterSuccess = {
-                    navController.popBackStack()  // Goes back to login
-                    navController.navigate(Routes.Login)
+                    navController.popBackStack()
+                    // Or navigate to home if needed
                 },
                 onNavigateToLogin = {
-                    navController.popBackStack()  // Goes back to login
+                    navController.popBackStack()
+                    // Or use navigate with popUpTo if needed
                 }
             )
+        }
+        composable(Routes.Profile) {
+            val currentUser by authViewModel.currentUser.collectAsState()
+
+            if (currentUser != null) {
+                ProfileScreen(
+                    onBack = { navController.popBackStack() },
+                    onLogout = {
+                        authViewModel.logout()
+                        navController.popBackStack()
+                    }
+                )
+            } else {
+                LoginScreen(
+                    onLoginSuccess = { navController.popBackStack() },
+                    onNavigateToRegister = { navController.navigate(Routes.Register) }
+                )
+            }
         }
         composable("${Routes.ProductDetails}/{productId}") { backStackEntry ->
             val productId = backStackEntry.arguments?.getString("productId") ?: ""

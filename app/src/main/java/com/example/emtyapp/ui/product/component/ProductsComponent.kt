@@ -31,12 +31,13 @@ fun ProductsList(
     products: List<Product>,
     onNavigateToDetails: (String) -> Unit,
     onAddToCart: (String) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    selectedCategory: String = "Tous" // Add selectedCategory parameter
 ) {
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
-            .background(Color(0xFF0A0A12)) // Deep space background
+            .background(Color(0xFF0A0A12))
     ) {
         item {
             // Futuristic header with holographic effect
@@ -55,9 +56,10 @@ fun ProductsList(
                     .padding(16.dp),
                 contentAlignment = Alignment.Center
             ) {
-                // Glowing title with digital effect
+                // Dynamic title based on selected category
                 Text(
-                    text = "NOS PRODUITS",
+                    text = if (selectedCategory == "Tous") "NOS PRODUITS"
+                    else selectedCategory.uppercase(),
                     style = MaterialTheme.typography.headlineLarge.copy(
                         color = Color(0xFF00D4FF),
                         fontWeight = FontWeight.ExtraBold,
@@ -101,7 +103,7 @@ fun ProductsList(
         }
 
         items(products) { product ->
-            ProductItem( // This will use your existing item component
+            ProductItem(
                 product = product,
                 onNavigateToDetails = { onNavigateToDetails(product.id) },
                 onAddToCart = { onAddToCart(product.id) },

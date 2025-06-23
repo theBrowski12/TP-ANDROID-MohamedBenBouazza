@@ -4,9 +4,7 @@ import android.util.Log
 import com.example.emtyapp.R
 import com.example.emtyapp.data.API.ProductApi
 import com.example.emtyapp.data.Entities.Product
-import kotlinx.coroutines.delay
 import javax.inject.Inject
-import kotlin.math.log
 
     class ProductRepository @Inject constructor(
         private val api: ProductApi
