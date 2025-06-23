@@ -9,12 +9,14 @@ import com.example.emtyapp.ui.product.ProductViewModel
 import com.example.emtyapp.ui.theme.EmtyAppTheme
 import androidx.compose.material3.Surface
 import androidx.activity.viewModels
+import com.example.emtyapp.ui.auth.AuthViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     private val viewModel: ProductViewModel by viewModels<ProductViewModel>()
+    private val authViewModel: AuthViewModel by viewModels()
 
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,7 +25,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             EmtyAppTheme {
                 Surface{
-                    AppNavigation(viewModel)
+                    AppNavigation(viewModel, authViewModel)
                 }
             }
         }

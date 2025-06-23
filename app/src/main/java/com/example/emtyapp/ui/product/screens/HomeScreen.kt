@@ -30,7 +30,7 @@ import com.example.emtyapp.ui.auth.AuthViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-    authViewModel: AuthViewModel = viewModel(), // Add this parameter
+    authViewModel: AuthViewModel,
     viewModel: ProductViewModel,
     onNavigateToDetails: (String) -> Unit,
     onNavigateToCart: () -> Unit,
@@ -80,6 +80,10 @@ fun HomeScreen(
             TopAppBar(
                 title = {
                     if (isSearchActive) {
+                        SearchBarDefaults.inputFieldColors(
+                            //textColor = Color.White,
+                            //placeholderColor = Color(0xFFA0A0CC)
+                        )
                         SearchBar(
                             query = searchQuery,
                             onQueryChange = { newQuery -> searchQuery = newQuery },
@@ -90,7 +94,7 @@ fun HomeScreen(
                             active = isSearchActive,
                             onActiveChange = { isSearchActive = it },
                             modifier = Modifier.fillMaxWidth(),
-                            placeholder = { Text("Rechercher produits...") },
+                            placeholder = { Text("Rechercher...") },
                             leadingIcon = {
                                 Icon(
                                     Icons.Default.Search,
@@ -113,10 +117,7 @@ fun HomeScreen(
                             },
                             colors = SearchBarDefaults.colors(
                                 containerColor = Color(0xFF2A2A3A),
-                                inputFieldColors = SearchBarDefaults.inputFieldColors(
-                                    //textColor = Color.White,
-                                    //placeholderColor = Color(0xFFA0A0CC)
-                                )
+                                dividerColor = Color(0x566D6D91)
                             )
                         ) {
                             // Empty content for the dropdown
@@ -240,7 +241,7 @@ fun HomeScreen(
         Column(
             modifier = Modifier
                 .padding(innerPadding)
-                .background(Color(0xFF3B3B94))
+                .background(Color(0xFF1E3D52))
                 .fillMaxSize()
         ) {
             // Categories Section with LazyRow

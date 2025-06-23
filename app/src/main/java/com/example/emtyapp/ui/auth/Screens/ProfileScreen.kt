@@ -26,7 +26,7 @@ import com.example.emtyapp.ui.auth.AuthViewModel
 fun ProfileScreen(
     onBack: () -> Unit,
     onLogout: () -> Unit,
-    authViewModel: AuthViewModel = hiltViewModel(),
+    authViewModel: AuthViewModel,
 
     ) {
     val currentUser by authViewModel.currentUser.collectAsState()

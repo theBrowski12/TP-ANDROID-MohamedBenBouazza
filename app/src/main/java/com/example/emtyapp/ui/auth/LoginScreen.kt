@@ -9,10 +9,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import kotlinx.coroutines.delay
 
 @Composable
 fun LoginScreen(
-    authViewModel: AuthViewModel = hiltViewModel(),
+    authViewModel: AuthViewModel,
     onLoginSuccess: () -> Unit,
     onNavigateToRegister: () -> Unit
 ) {
@@ -62,10 +63,12 @@ fun LoginScreen(
         }
         val currentUser by authViewModel.currentUser.collectAsState()
         LaunchedEffect(currentUser) {
-            if (currentUser != null) {
-                onLoginSuccess()
+            currentUser?.let {
+                delay(100) // Give time for NavHost to recompute state
+                onLoginSuccess() // or onRegisterSuccess()
             }
         }
+
         TextButton(onClick = onNavigateToRegister) {
             Text("Don't have an account? Register")
         }

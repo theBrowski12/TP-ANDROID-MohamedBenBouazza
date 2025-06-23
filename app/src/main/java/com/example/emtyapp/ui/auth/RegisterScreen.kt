@@ -16,7 +16,7 @@ import com.example.emtyapp.data.Entities.User
 
 @Composable
 fun RegisterScreen(
-    authViewModel: AuthViewModel = hiltViewModel(),
+    authViewModel: AuthViewModel,
     onRegisterSuccess: () -> Unit,
     onNavigateToLogin: () -> Unit
 ) {

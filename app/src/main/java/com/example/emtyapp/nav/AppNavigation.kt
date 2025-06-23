@@ -3,10 +3,12 @@ package com.example.emtyapp.nav
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.emtyapp.data.Repository.ProductRepository
@@ -30,10 +32,8 @@ object Routes {
 }
 
 @Composable
-fun AppNavigation(viewModel: ProductViewModel= hiltViewModel()) {
+fun AppNavigation(viewModel: ProductViewModel= hiltViewModel(), authViewModel: AuthViewModel) {
     val navController = rememberNavController()
-    val authViewModel: AuthViewModel = hiltViewModel()
-    val productViewModel: ProductViewModel = hiltViewModel()
 
     NavHost(navController = navController, startDestination = Routes.Home) {
 
@@ -79,6 +79,8 @@ fun AppNavigation(viewModel: ProductViewModel= hiltViewModel()) {
         // In AppNavigation.kt
         composable(Routes.Login) {
             LoginScreen(
+                authViewModel = authViewModel,
+
                 onLoginSuccess = {
                     try {
                         navController.popBackStack()
@@ -106,16 +108,19 @@ fun AppNavigation(viewModel: ProductViewModel= hiltViewModel()) {
                     // Or navigate to home if needed
                 },
                 onNavigateToLogin = {
+
                     navController.popBackStack()
                     // Or use navigate with popUpTo if needed
-                }
-            )
+                },
+                authViewModel = authViewModel,
+                )
         }
         composable(Routes.Profile) {
             val currentUser by authViewModel.currentUser.collectAsState()
 
             if (currentUser != null) {
                 ProfileScreen(
+                    authViewModel = authViewModel,
                     onBack = { navController.popBackStack() },
                     onLogout = {
                         authViewModel.logout()
@@ -124,6 +129,7 @@ fun AppNavigation(viewModel: ProductViewModel= hiltViewModel()) {
                 )
             } else {
                 LoginScreen(
+                    authViewModel = authViewModel,
                     onLoginSuccess = { navController.popBackStack() },
                     onNavigateToRegister = { navController.navigate(Routes.Register) }
                 )
