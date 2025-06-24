@@ -9,4 +9,7 @@ interface UserRepository {
     suspend fun getCurrentUser(): User?
     suspend fun logout()
     suspend fun updateUser(user: User): Result<User>
+    suspend fun getAllUsers(): Result<List<User>>
+    suspend fun deleteUserById(userId: String): Result<Unit>
+
 }

@@ -7,6 +7,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.ShoppingCart
@@ -27,6 +29,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.emtyapp.ui.auth.AuthViewModel
 import com.example.emtyapp.ui.product.ProductIntent
 import com.example.emtyapp.ui.product.ProductViewModel
 
@@ -34,16 +37,18 @@ import com.example.emtyapp.ui.product.ProductViewModel
 @Composable
 fun DetailsScreen(
     productId: String,
+    authViewModel: AuthViewModel,
     viewModel: ProductViewModel = hiltViewModel(),
-    onBuy: () -> Unit,
     onLoginClick: () -> Unit = {},
     onRegisterClick: () -> Unit = {},
-    onHomeClick: () -> Unit = {},  // New navigation callback
-    onProfileClick: () -> Unit = {},  // New navigation callback
-    onCartClick: () -> Unit = {}  // New navigation callback
+    onHomeClick: () -> Unit = {},
+    onProfileClick: () -> Unit = {},
+    onCartClick: () -> Unit = {},
+    onBackClick: () -> Unit = {}  // Retour button callback
 ) {
     val state by viewModel.state.collectAsState()
     val cartItemCount by remember { derivedStateOf { viewModel.getCartItemCount() } }
+    val currentUser by authViewModel.currentUser.collectAsState()
 
     LaunchedEffect(productId) {
         viewModel.loadProductById(productId)
@@ -52,24 +57,48 @@ fun DetailsScreen(
     Scaffold(
         topBar = {
             TopAppBar(
+                navigationIcon = {
+                    IconButton(onClick = onBackClick) {
+                        Icon(
+                            imageVector = Icons.Default.ArrowBack,
+                            contentDescription = "Retour",
+                            tint = Color(0xFF0288D1)
+                        )
+                    }
+                },
                 title = {
                     Text(
-                        text = "Détails Produit",
+                        text = "Détails",
                         color = Color(0xFF0288D1),
                         style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold)
                     )
-
-
                 },
                 actions = {
-                    TextButton(onClick = onLoginClick) {
-                        Text("Login", color = Color(0xFF0288D1))
+                    if (currentUser != null) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier.padding(end = 8.dp)
+                        ) {
+                            Text(
+                                text = "Welcome, ${currentUser!!.name ?: currentUser!!.email.take(10)}",
+                                color = Color(0xFF0288D1),
+                                maxLines = 1,
+                                modifier = Modifier.padding(end = 8.dp)
+                            )
+                            TextButton(onClick = { authViewModel.logout() }) {
+                                Text("Logout", color = Color(0xFF00ACC1))
+                            }
+                        }
+                    } else {
+                        TextButton(onClick = onLoginClick) {
+                            Text("Login", color = Color(0xFF0288D1))
+                        }
+                        Spacer(modifier = Modifier.width(4.dp))
+                        TextButton(onClick = onRegisterClick) {
+                            Text("Register", color = Color(0xFF00ACC1))
+                        }
+                        Spacer(modifier = Modifier.width(8.dp))
                     }
-                    Spacer(modifier = Modifier.width(4.dp))
-                    TextButton(onClick = onRegisterClick) {
-                        Text("Register", color = Color(0xFF00ACC1))
-                    }
-                    Spacer(modifier = Modifier.width(8.dp))
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = Color.Transparent
@@ -79,31 +108,34 @@ fun DetailsScreen(
         },
         bottomBar = {
             BottomAppBar(
-                containerColor = Color(0xFFF0FBFF) // Light blue background
+                containerColor = Color(0xFFF0FBFF)
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceAround
                 ) {
-                    // Home Button
                     IconButton(onClick = onHomeClick) {
                         Icon(
                             Icons.Default.Home,
                             contentDescription = "Home",
-                            tint = Color(0xFF0288D1) // Blue color
+                            tint = Color(0xFF0288D1)
                         )
                     }
 
-                    // Profile Button
-                    IconButton(onClick = onProfileClick) {
+                    IconButton(onClick = {
+                        if (currentUser != null) {
+                            onProfileClick()
+                        } else {
+                            onLoginClick()
+                        }
+                    }) {
                         Icon(
                             Icons.Default.Person,
                             contentDescription = "Profile",
-                            tint = Color(0xFF0288D1) // Blue color
+                            tint = Color(0xFF0288D1)
                         )
                     }
 
-                    // Cart Button with Badge
                     IconButton(onClick = onCartClick) {
                         BadgedBox(
                             badge = {
@@ -132,9 +164,10 @@ fun DetailsScreen(
 
         when {
             state.isLoading -> {
-                Box(modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding),
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(innerPadding),
                     contentAlignment = Alignment.Center
                 ) {
                     CircularProgressIndicator(color = Color(0xFF00BCD4))
@@ -142,9 +175,10 @@ fun DetailsScreen(
             }
 
             state.error != null -> {
-                Box(modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding),
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(innerPadding),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
@@ -156,9 +190,10 @@ fun DetailsScreen(
             }
 
             state.selectedProduct == null -> {
-                Box(modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding),
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(innerPadding),
                     contentAlignment = Alignment.Center
                 ) {
                     Text("Produit introuvable", color = Color.Gray)
@@ -271,7 +306,6 @@ fun DetailsScreen(
                     Button(
                         onClick = {
                             viewModel.handleIntent(ProductIntent.AddToCart(productId))
-                            onBuy()
                         },
                         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF00BCD4)),
                         modifier = Modifier

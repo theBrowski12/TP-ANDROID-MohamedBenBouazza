@@ -31,7 +31,7 @@ class UserRepositoryImpl @Inject constructor(
         }
         if (getUsers().isEmpty()) {
             saveUsers(listOf(
-                User("U00","admin@example.com", "admin123", "simo", "1245", "admin"),
+                User("U00","admin@gmail.com", "admin123", "simo", "1245", "admin"),
                 User("U001","test@example.com", "test123", "karim", "123444", "user")
             ))
         }
@@ -136,5 +136,30 @@ class UserRepositoryImpl @Inject constructor(
             Log.e("UserRepository", "Error saving current user", e)
         }
     }
+    override suspend fun getAllUsers(): Result<List<User>> {
+        return try {
+            val users = getUsers()
+            Result.success(users)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+    override suspend fun deleteUserById(userId: String): Result<Unit> {
+        return try {
+            val users = getUsers().toMutableList()
+            val removed = users.removeIf { it.id == userId }
+            if (removed) {
+                saveUsers(users)
+                Result.success(Unit)
+            } else {
+                Result.failure(Exception("Utilisateur non trouvé"))
+            }
+        } catch (e: Exception) {
+            Log.e("UserRepository", "Erreur suppression utilisateur", e)
+            Result.failure(e)
+        }
+    }
+
+
 
 }

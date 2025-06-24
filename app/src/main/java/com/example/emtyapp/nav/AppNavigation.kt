@@ -3,36 +3,38 @@ package com.example.emtyapp.nav
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.emtyapp.data.Repository.ProductRepository
 import com.example.emtyapp.ui.auth.AuthViewModel
 import com.example.emtyapp.ui.auth.LoginScreen
 import com.example.emtyapp.ui.auth.RegisterScreen
 import com.example.emtyapp.ui.auth.Screens.ProfileScreen
-import com.example.emtyapp.ui.product.ProductIntent
-import com.example.emtyapp.ui.product.component.DetailsScreen
-import com.example.emtyapp.ui.product.screens.HomeScreen
+import com.example.emtyapp.ui.auth.Screens.UserListScreen
 import com.example.emtyapp.ui.product.ProductViewModel
+import com.example.emtyapp.ui.product.component.DetailsScreen
 import com.example.emtyapp.ui.product.screens.CartScreen
+import com.example.emtyapp.ui.product.screens.HomeScreen
 
 object Routes {
     const val Home = "home"
     const val ProductDetails = "productDetails"
     const val Cart = "cart"
-    const val Login = "login"  // Added
+    const val Login = "login"
     const val Register = "register"
-    const val Profile = "profile"// Added
+    const val Profile = "profile"
+    const val UserList = "userList"
+
 }
 
 @Composable
-fun AppNavigation(viewModel: ProductViewModel= hiltViewModel(), authViewModel: AuthViewModel) {
+fun AppNavigation(
+    viewModel: ProductViewModel = hiltViewModel(),
+    authViewModel: AuthViewModel
+) {
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = Routes.Home) {
@@ -42,18 +44,28 @@ fun AppNavigation(viewModel: ProductViewModel= hiltViewModel(), authViewModel: A
                 authViewModel = authViewModel,
                 viewModel = viewModel,
                 onNavigateToDetails = { productId ->
-                navController.navigate("${Routes.ProductDetails}/$productId")
-            },
+                    navController.navigate("${Routes.ProductDetails}/$productId")
+                },
                 onNavigateToCart = {
-                    navController.navigate(Routes.Cart) // Fix: Navigate to cart
+                    navController.navigate(Routes.Cart) {
+                        launchSingleTop = true
+                    }
                 },
                 onNavigateToLogin = {
-                    navController.navigate(Routes.Login)  // Fixed to navigate to login
+                    navController.navigate(Routes.Login) {
+                        launchSingleTop = true
+                    }
                 },
                 onNavigateToRegister = {
-                    navController.navigate(Routes.Register)  // Fixed to navigate to register
+                    navController.navigate(Routes.Register) {
+                        launchSingleTop = true
+                    }
                 },
-                onNavigateToProfile = { navController.navigate(Routes.Profile) }
+                onNavigateToProfile = {
+                    navController.navigate(Routes.Profile) {
+                        launchSingleTop = true
+                    }
+                }
             )
         }
 
@@ -64,98 +76,180 @@ fun AppNavigation(viewModel: ProductViewModel= hiltViewModel(), authViewModel: A
             val productId = backStackEntry.arguments?.getString("productId") ?: ""
             DetailsScreen(
                 productId = productId,
+                authViewModel = authViewModel,
                 viewModel = viewModel,
-                onBuy = {
-                    viewModel.handleIntent(ProductIntent.AddToCart(productId))
-                    println("Product added to cart: $productId")
+                onBackClick = { navController.popBackStack() },
+                onHomeClick = {
+                    navController.navigate(Routes.Home) {
+                        launchSingleTop = true
+                    }
+                },
+                onLoginClick = {
+                    navController.navigate(Routes.Login) {
+                        launchSingleTop = true
+                    }
+                },
+                onRegisterClick = {
+                    navController.navigate(Routes.Register) {
+                        launchSingleTop = true
+                    }
+                },
+                onProfileClick = {
+                    navController.navigate(Routes.Profile) {
+                        launchSingleTop = true
+                    }
+                },
+                onCartClick = {
+                    navController.navigate(Routes.Cart) {
+                        launchSingleTop = true
+                    }
                 }
             )
         }
+
         composable(Routes.Cart) {
-            CartScreen(navController = navController,
-                viewModel = viewModel) // )
+            CartScreen(
+                navController = navController,
+                viewModel = viewModel
+            )
         }
-        // In your NavGraph file
-        // In AppNavigation.kt
+
         composable(Routes.Login) {
             LoginScreen(
                 authViewModel = authViewModel,
-
                 onLoginSuccess = {
-                    try {
-                        navController.popBackStack()
-                    } catch (e: Exception) {
-                        navController.navigate(Routes.Home) {
-                            popUpTo(Routes.Home)
-                        }
-                    }
+                    navController.popBackStack()
                 },
                 onNavigateToRegister = {
-                    try {
-                        navController.navigate(Routes.Register) {
-                            launchSingleTop = true
-                        }                    }
-                    catch (e: Exception) {
-                        // Handle error
+                    navController.navigate(Routes.Register) {
+                        launchSingleTop = true
+                    }
+                },
+                onHomeClick = {
+                    navController.navigate(Routes.Home) {
+                        launchSingleTop = true
+                    }
+                },
+                onCartClick = {
+                    navController.navigate(Routes.Cart) {
+                        launchSingleTop = true
+                    }
+                },
+                onProfileClick = {
+                    navController.navigate(Routes.Profile) {
+                        launchSingleTop = true
                     }
                 }
             )
         }
+
         composable(Routes.Register) {
             RegisterScreen(
-                onRegisterSuccess = {
-                    navController.popBackStack()
-                    // Or navigate to home if needed
-                },
-                onNavigateToLogin = {
-
-                    navController.popBackStack()
-                    // Or use navigate with popUpTo if needed
-                },
                 authViewModel = authViewModel,
-                )
+                onRegisterSuccess = { navController.navigate(Routes.Home) },
+                onNavigateToLogin = { navController.popBackStack() },
+                onNavigateToHome = { navController.navigate(Routes.Home) },
+                onNavigateToCart = { navController.navigate(Routes.Cart) }
+            )
         }
+
         composable(Routes.Profile) {
             val currentUser by authViewModel.currentUser.collectAsState()
-
             if (currentUser != null) {
                 ProfileScreen(
-                    authViewModel = authViewModel,
                     onBack = { navController.popBackStack() },
                     onLogout = {
                         authViewModel.logout()
-                        navController.popBackStack()
-                    }
+                        navController.navigate(Routes.Home) {
+                            popUpTo(Routes.Profile) { inclusive = true }
+                        }
+                    },
+                    onNavigateToHome = {
+                        navController.navigate(Routes.Home) {
+                            launchSingleTop = true
+                        }
+                    },
+                    onNavigateToCart = {
+                        navController.navigate(Routes.Cart) {
+                            launchSingleTop = true
+                        }
+                    },
+                    onNavigateToUserList = {
+                        navController.navigate(Routes.UserList) {
+                            launchSingleTop = true
+                        }
+                    },
+                    authViewModel = authViewModel
                 )
             } else {
                 LoginScreen(
                     authViewModel = authViewModel,
-                    onLoginSuccess = { navController.popBackStack() },
-                    onNavigateToRegister = { navController.navigate(Routes.Register) }
+                    onLoginSuccess = {
+                        navController.popBackStack()
+                    },
+                    onNavigateToRegister = {
+                        navController.navigate(Routes.Register) {
+                            launchSingleTop = true
+                        }
+                    },
+                    onHomeClick = {
+                        navController.navigate(Routes.Home) {
+                            launchSingleTop = true
+                        }
+                    },
+                    onCartClick = {
+                        navController.navigate(Routes.Cart) {
+                            launchSingleTop = true
+                        }
+                    },
+                    onProfileClick = {
+                        navController.navigate(Routes.Profile) {
+                            launchSingleTop = true
+                        }
+                    }
                 )
             }
         }
-        composable("${Routes.ProductDetails}/{productId}") { backStackEntry ->
-            val productId = backStackEntry.arguments?.getString("productId") ?: ""
-            DetailsScreen(
-                productId = productId,
-                viewModel = viewModel,
-                onBuy = {
-                    navController.navigate(Routes.Cart)
-                },
-                onLoginClick = { navController.navigate(Routes.Login) },
-                onRegisterClick = { navController.navigate(Routes.Register) },
-                onHomeClick = {
-                    navController.popBackStack(Routes.Home, inclusive = false)
-                },
-                onProfileClick = {
-                    // Navigate to profile screen
-                    //navController.navigate(Routes.Profile)
-                },
-                onCartClick = {
-                    navController.navigate(Routes.Cart)
-                }
-            )
+        composable(Routes.UserList) {
+            val currentUser by authViewModel.currentUser.collectAsState()
+
+            if (currentUser?.role?.lowercase() == "admin") {
+                UserListScreen(
+                    authViewModel = authViewModel,
+                    onBack = { navController.popBackStack() }
+                )
+            } else {
+                // Redirection si non admin
+                LoginScreen(
+                    authViewModel = authViewModel,
+                    onLoginSuccess = {
+                        navController.navigate(Routes.UserList) {
+                            popUpTo(Routes.Login) { inclusive = true }
+                        }
+                    },
+                    onNavigateToRegister = {
+                        navController.navigate(Routes.Register) {
+                            launchSingleTop = true
+                        }
+                    },
+                    onHomeClick = {
+                        navController.navigate(Routes.Home) {
+                            launchSingleTop = true
+                        }
+                    },
+                    onCartClick = {
+                        navController.navigate(Routes.Cart) {
+                            launchSingleTop = true
+                        }
+                    },
+                    onProfileClick = {
+                        navController.navigate(Routes.Profile) {
+                            launchSingleTop = true
+                        }
+                    }
+                )
+            }
         }
+
     }
 }
