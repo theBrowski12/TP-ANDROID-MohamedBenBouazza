@@ -29,6 +29,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenu
@@ -126,28 +127,45 @@ fun UserListScreen(
                 LazyColumn {
                     items(allUsers) { user ->
                         val expanded = remember { mutableStateOf(false) }
+                        val isCurrentUser = user.id == currentUser?.id
+
                         Card(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(vertical = 8.dp),
-                            colors = CardDefaults.cardColors(containerColor = Color(0xFF1C1C3C)),
+                            colors = CardDefaults.cardColors(
+                                containerColor = if (isCurrentUser) Color(0xFF2E7D32) else Color(
+                                    0xFF25254D
+                                ) // Vert si c’est vous
+                            ),
                             shape = RoundedCornerShape(12.dp),
-                            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+                            elevation = CardDefaults.cardElevation(defaultElevation = if (isCurrentUser) 8.dp else 4.dp)
                         ) {
                             Column(modifier = Modifier.padding(16.dp)) {
-                                Text(
-                                    text = "👤 ${user.name}",
-                                    color = Color(0xFF00D4FF),
-                                    style = MaterialTheme.typography.titleMedium
-                                )
+                                Row(verticalAlignment = Alignment.CenterVertically) {
+                                    Text(
+                                        text = "👤 ${user.name}",
+                                        color = Color(0xFF00D4FF),
+                                        style = MaterialTheme.typography.titleMedium,
+                                        modifier = Modifier.weight(1f)
+                                    )
+
+                                    if (isCurrentUser) {
+                                        Text(
+                                            text = "👈 C’est vous",
+                                            color = Color(0xFFFFF176), // Jaune clair
+                                            style = MaterialTheme.typography.bodySmall
+                                        )
+                                    }
+                                }
+
                                 Text(
                                     text = "📧 ${user.email}",
                                     color = Color.LightGray,
                                     style = MaterialTheme.typography.bodyMedium
                                 )
 
-                                // Role modifiable par admin sauf pour lui-même
-                                if (currentUser?.id != user.id) {
+                                if (!isCurrentUser) {
                                     Row(verticalAlignment = Alignment.CenterVertically) {
                                         Text(
                                             text = "🔐 Rôle : ${user.role}",
@@ -156,7 +174,11 @@ fun UserListScreen(
                                             modifier = Modifier.weight(1f)
                                         )
                                         IconButton(onClick = { expanded.value = true }) {
-                                            Icon(Icons.Default.ArrowDropDown, contentDescription = "Changer rôle", tint = Color(0xFF00B8D4))
+                                            Icon(
+                                                Icons.Default.ArrowDropDown,
+                                                contentDescription = "Changer rôle",
+                                                tint = Color(0xFF00B8D4)
+                                            )
                                         }
                                         DropdownMenu(
                                             expanded = expanded.value,
@@ -168,7 +190,6 @@ fun UserListScreen(
                                                     text = { Text(roleOption) },
                                                     onClick = {
                                                         expanded.value = false
-                                                        // Mise à jour du rôle via ViewModel
                                                         authViewModel.updateUserRole(user.id!!, roleOption)
                                                     }
                                                 )
@@ -181,18 +202,11 @@ fun UserListScreen(
                                         color = Color(0xFF00B8D4),
                                         style = MaterialTheme.typography.bodySmall
                                     )
-                                    Text(
-                                        text = "👈 C'est vous",
-                                        color = Color(0xFF66BB6A), // vert doux
-                                        style = MaterialTheme.typography.bodySmall
-                                    )
-
                                 }
-                                Spacer(modifier = Modifier.height(8.dp))
 
-                                // Bouton supprimer visible uniquement pour l’admin et pas sur lui-même
-                                if (currentUser?.role?.lowercase() == "admin" && currentUser?.id != user.id
-                                ) {
+                                Spacer(modifier = Modifier.height(2.dp))
+
+                                if (currentUser?.role?.lowercase() == "admin" && !isCurrentUser) {
                                     Spacer(modifier = Modifier.height(8.dp))
                                     Button(
                                         onClick = { userToDelete = user },
@@ -201,17 +215,16 @@ fun UserListScreen(
                                         Text("Supprimer", color = Color.White)
                                     }
                                 }
-
                             }
                         }
-
                     }
                 }
+
             }
         }
     }
     if (userToDelete != null) {
-        androidx.compose.material3.AlertDialog(
+        AlertDialog(
             onDismissRequest = { userToDelete = null },
             confirmButton = {
                 Button(onClick = {
