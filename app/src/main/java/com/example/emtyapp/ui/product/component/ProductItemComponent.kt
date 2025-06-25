@@ -41,7 +41,9 @@ fun ProductItem(
     product: Product,
     onNavigateToDetails: (String) -> Unit,
     onAddToCart: (String) -> Unit,  // Changed to accept productId
-    modifier: Modifier
+    modifier: Modifier,
+    isAdmin: Boolean = false, // ✅ Ajouté
+    onEditClick: (Product) -> Unit = {} // ✅ Ajouté
 ) {
     Card(
         modifier = modifier
@@ -148,6 +150,23 @@ fun ProductItem(
                     ) {
                         Text("Ajouter", color = Color.White)
                     }
+                    // ✅ Bouton visible uniquement pour les admins
+                    // ✅ Affichage du bouton "Gérer" uniquement pour l'admin
+                    if (isAdmin) {
+                        Spacer(modifier = Modifier.height(3.dp))
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.End
+                        ) {
+                            OutlinedButton(
+                                onClick = { onEditClick(product) },
+                                colors = ButtonDefaults.outlinedButtonColors(contentColor = Color(0xFFD32F2F))
+                            ) {
+                                Text("✏️ Gérer")
+                            }
+                        }
+                    }
+
                 }
             }
         }

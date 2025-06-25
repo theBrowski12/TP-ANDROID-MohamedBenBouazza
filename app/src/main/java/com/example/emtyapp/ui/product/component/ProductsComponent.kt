@@ -32,7 +32,9 @@ fun ProductsList(
     onNavigateToDetails: (String) -> Unit,
     onAddToCart: (String) -> Unit,
     modifier: Modifier = Modifier,
-    selectedCategory: String = "Tous" // Add selectedCategory parameter
+    selectedCategory: String = "Tous",
+    currentUserRole: String = "", // Ajouté
+    onEditClick: (Product) -> Unit = {}
 ) {
     LazyColumn(
         modifier = modifier
@@ -107,8 +109,13 @@ fun ProductsList(
                 product = product,
                 onNavigateToDetails = { onNavigateToDetails(product.id) },
                 onAddToCart = { onAddToCart(product.id) },
-                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                isAdmin = currentUserRole.lowercase() == "admin", // ✅ admin seulement
+                onEditClick = { selectedProduct ->
+                    onEditClick(selectedProduct) // ✅ déclenche le callback
+                }
             )
         }
+
     }
 }

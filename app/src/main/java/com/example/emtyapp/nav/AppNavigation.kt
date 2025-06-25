@@ -1,6 +1,8 @@
 package com.example.emtyapp.nav
 
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -16,6 +18,7 @@ import com.example.emtyapp.ui.auth.Screens.ProfileScreen
 import com.example.emtyapp.ui.auth.Screens.UserListScreen
 import com.example.emtyapp.ui.product.ProductViewModel
 import com.example.emtyapp.ui.product.component.DetailsScreen
+import com.example.emtyapp.ui.product.component.EditProductScreen
 import com.example.emtyapp.ui.product.screens.CartScreen
 import com.example.emtyapp.ui.product.screens.HomeScreen
 
@@ -27,7 +30,7 @@ object Routes {
     const val Register = "register"
     const val Profile = "profile"
     const val UserList = "userList"
-
+    const val EditProduct = "edit_product"
 }
 
 @Composable
@@ -63,6 +66,11 @@ fun AppNavigation(
                 },
                 onNavigateToProfile = {
                     navController.navigate(Routes.Profile) {
+                        launchSingleTop = true
+                    }
+                },
+                onNavigateToEditProduct = { productId ->
+                    navController.navigate("${Routes.EditProduct}/$productId") {
                         launchSingleTop = true
                     }
                 }
@@ -249,6 +257,23 @@ fun AppNavigation(
                     }
                 )
             }
+        }
+        composable("${Routes.EditProduct}/{productId}") { backStackEntry ->
+            val productId = backStackEntry.arguments?.getString("productId") ?: ""
+            val product by viewModel.selectedProduct.collectAsState()
+
+            LaunchedEffect(productId) {
+                viewModel.loadProductById(productId)
+            }
+
+            product?.let {
+                EditProductScreen(
+                    product = it,
+                    viewModel = viewModel,
+                    onBack = { navController.popBackStack()
+                    }
+                )
+            } ?: Text("Chargement...")
         }
 
     }

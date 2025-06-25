@@ -180,6 +180,8 @@ fun ProfileScreen(
                 ) {
                     Text("Se déconnecter", color = Color.White)
                 }
+                Spacer(modifier = Modifier.height(16.dp))
+
                 if (currentUser?.role?.lowercase() == "admin") {
                     Button(
                         onClick = onNavigateToUserList,

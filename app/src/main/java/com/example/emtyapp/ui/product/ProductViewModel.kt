@@ -104,6 +104,7 @@ class ProductViewModel @Inject constructor(
             _state.update { it.copy(isLoading = true, error = null) }
             try {
                 val product = repository.getProductById(id)
+                _selectedProduct.value = product  // <-- ici
                 _state.update {
                     it.copy(
                         isLoading = false,
@@ -121,6 +122,7 @@ class ProductViewModel @Inject constructor(
             }
         }
     }
+
 
     private fun addToCart(productId: String) {
         viewModelScope.launch {
@@ -174,4 +176,26 @@ class ProductViewModel @Inject constructor(
     fun getCartItemCount(): Int {
         return _cartItems.value.sumOf { it.quantity }
     }
+    fun updateProduct(product: Product, onResult: (Boolean) -> Unit) {
+        viewModelScope.launch {
+            try {
+                val updated = repository.updateProduct(product)
+                if (updated != null) {
+                    // Mettre à jour la liste locale (optionnel)
+                    _allProducts = _allProducts.map {
+                        if (it.id == updated.id) updated else it
+                    }
+                    _state.update { it.copy(products = _allProducts, selectedProduct = updated) }
+                    onResult(true)
+                } else {
+                    onResult(false)
+                }
+            } catch (e: Exception) {
+                onResult(false)
+            }
+        }
+    }
+
+
+
 }

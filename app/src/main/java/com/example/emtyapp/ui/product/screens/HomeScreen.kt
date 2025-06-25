@@ -25,6 +25,7 @@ import com.example.emtyapp.ui.product.ProductViewModel
 import com.example.emtyapp.ui.product.component.ProductsList
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.FilterChipDefaults
+import androidx.navigation.NavController
 import com.example.emtyapp.ui.auth.AuthViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -36,7 +37,8 @@ fun HomeScreen(
     onNavigateToCart: () -> Unit,
     onNavigateToLogin: () -> Unit,
     onNavigateToRegister: () -> Unit,
-    onNavigateToProfile: () -> Unit
+    onNavigateToProfile: () -> Unit,
+    onNavigateToEditProduct: (String) -> Unit
 ) {
     val state by viewModel.state.collectAsState()
     val cartItemCount by remember { derivedStateOf { viewModel.getCartItemCount() } }
@@ -285,9 +287,11 @@ fun HomeScreen(
                             onNavigateToDetails = onNavigateToDetails,
                             onAddToCart = { productId ->
                                 viewModel.handleIntent(ProductIntent.AddToCart(productId))
-                                // Optional: Show snackbar or feedback
                             },
-                            selectedCategory = selectedCategory
+                            selectedCategory = selectedCategory,
+                            currentUserRole = authViewModel.currentUser.collectAsState().value?.role ?: "",
+                            onEditClick = { product -> onNavigateToEditProduct(product.id) }
+
                         )
                     }
                 }

@@ -69,4 +69,15 @@ import javax.inject.Inject
                 null
             }
         }
+        suspend fun updateProduct(product: Product): Product? {
+            return try {
+                val updatedProduct = api.updateProduct(product.id, product)
+                updatedProduct.copy(imageResId = mapProductImage(updatedProduct.id))
+            } catch (e: Exception) {
+                Log.e("ProductRepository", "Error updating product ${product.id}: ${e.message}", e)
+                null
+            }
+        }
+
+
     }
