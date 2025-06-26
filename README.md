@@ -17,6 +17,7 @@ This is a sample Ecommerce Android application built with Jetpack Compose follow
 - Browse product list with categories and search
 - View detailed product information
 - Add products to shopping cart (persisted locally)
+- checkout products via Whatsapp (confirmation service)
 - View and manage shopping cart contents
 - User registration and login with email/password
 - Profile management with editable user information
