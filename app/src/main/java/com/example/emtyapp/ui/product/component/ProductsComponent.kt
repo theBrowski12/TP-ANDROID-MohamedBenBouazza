@@ -34,7 +34,8 @@ fun ProductsList(
     modifier: Modifier = Modifier,
     selectedCategory: String = "Tous",
     currentUserRole: String = "", // Ajouté
-    onEditClick: (Product) -> Unit = {}
+    onEditClick: (Product) -> Unit = {},
+    onDeleteClick: (Product) -> Unit = {}
 ) {
     LazyColumn(
         modifier = modifier
@@ -113,7 +114,9 @@ fun ProductsList(
                 isAdmin = currentUserRole.lowercase() == "admin", // ✅ admin seulement
                 onEditClick = { selectedProduct ->
                     onEditClick(selectedProduct) // ✅ déclenche le callback
-                }
+                },
+                onDeleteClick = { onDeleteClick(it) }
+
             )
         }
 

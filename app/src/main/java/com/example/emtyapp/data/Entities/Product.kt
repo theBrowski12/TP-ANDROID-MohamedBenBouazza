@@ -1,9 +1,10 @@
 package com.example.emtyapp.data.Entities
 
 import com.google.gson.annotations.SerializedName
+import java.net.URL
 
 data class Product(
-    @SerializedName("productID")
+    @SerializedName("_id")
     val id: String,
     @SerializedName("productTitle")
     val name: String,
@@ -11,8 +12,8 @@ data class Product(
     val price: Double,
     @SerializedName("productOldPrice")
     val oldPrice: Double,
-    @SerializedName("productImageResId")
-    val imageResId: Int,
+    @SerializedName("productImageResURL")
+    val imageResURL: String,
     @SerializedName("productQuantity")
     val quantity: Int,
     @SerializedName("productDescription")

@@ -17,6 +17,7 @@ import com.example.emtyapp.ui.auth.RegisterScreen
 import com.example.emtyapp.ui.auth.Screens.ProfileScreen
 import com.example.emtyapp.ui.auth.Screens.UserListScreen
 import com.example.emtyapp.ui.product.ProductViewModel
+import com.example.emtyapp.ui.product.component.AddNewProductScreen
 import com.example.emtyapp.ui.product.component.DetailsScreen
 import com.example.emtyapp.ui.product.component.EditProductScreen
 import com.example.emtyapp.ui.product.screens.CartScreen
@@ -31,6 +32,7 @@ object Routes {
     const val Profile = "profile"
     const val UserList = "userList"
     const val EditProduct = "edit_product"
+    const val AddProduct = "add_product"
 }
 
 @Composable
@@ -73,6 +75,26 @@ fun AppNavigation(
                     navController.navigate("${Routes.EditProduct}/$productId") {
                         launchSingleTop = true
                     }
+                },
+                onNavigateToAddProduct = {
+                    navController.navigate(Routes.AddProduct) {
+                        launchSingleTop = true
+                    }
+                }
+            )
+        }
+        composable(Routes.AddProduct) {
+            AddNewProductScreen(
+                viewModel = viewModel,
+                onBack = { navController.popBackStack() },
+                onNavigateToHome = {
+                    navController.navigate(Routes.Home) { launchSingleTop = true }
+                },
+                onNavigateToProfile = {
+                    navController.navigate(Routes.Profile) { launchSingleTop = true }
+                },
+                onNavigateToCart = {
+                    navController.navigate(Routes.Cart) { launchSingleTop = true }
                 }
             )
         }

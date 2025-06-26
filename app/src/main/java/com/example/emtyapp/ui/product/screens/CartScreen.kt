@@ -31,6 +31,7 @@ import com.example.emtyapp.ui.product.openWhatsAppWithMessage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import android.content.Context
 import androidx.compose.ui.platform.LocalContext
+import coil.compose.rememberAsyncImagePainter
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -147,7 +148,7 @@ fun CartItemCard(
         ) {
             // Product Image
             Image(
-                painter = painterResource(id = cartItem.product.imageResId),
+                painter = rememberAsyncImagePainter(cartItem.product.imageResURL),
                 contentDescription = cartItem.product.name,
                 modifier = Modifier
                     .size(80.dp)

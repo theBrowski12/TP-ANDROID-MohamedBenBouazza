@@ -56,7 +56,7 @@ fun ProfileScreen(
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color(0xFF2A2A3A),
+                    containerColor = Color(0xFF262641),
                     titleContentColor = Color.White
                 )
             )

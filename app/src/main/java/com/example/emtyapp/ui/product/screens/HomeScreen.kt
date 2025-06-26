@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
@@ -38,8 +39,10 @@ fun HomeScreen(
     onNavigateToLogin: () -> Unit,
     onNavigateToRegister: () -> Unit,
     onNavigateToProfile: () -> Unit,
-    onNavigateToEditProduct: (String) -> Unit
-) {
+    onNavigateToEditProduct: (String) -> Unit,
+    onNavigateToAddProduct: () -> Unit,
+
+    ) {
     val state by viewModel.state.collectAsState()
     val cartItemCount by remember { derivedStateOf { viewModel.getCartItemCount() } }
     var searchQuery by remember { mutableStateOf("") }
@@ -153,6 +156,7 @@ fun HomeScreen(
                 actions = {
                     if (currentUser != null) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
+
                             Text(
                                 text = "Welcome ${currentUser?.name?.take(10) ?: currentUser?.email?.take(10)}",
                                 color = Color(0xFF00D4FF),
@@ -238,7 +242,19 @@ fun HomeScreen(
                     }
                 }
             }
-        }
+        } ,
+        floatingActionButton = {
+            if (currentUser?.role?.lowercase() == "admin") {
+                FloatingActionButton(
+                    onClick = onNavigateToAddProduct,
+                    containerColor = Color(0xFF00D4FF),
+                    contentColor = Color.White
+                ) {
+                    Icon(Icons.Default.Add, contentDescription = "Ajouter un produit")
+                }
+            }
+        },
+        floatingActionButtonPosition = FabPosition.End,
     ) { innerPadding ->
         Column(
             modifier = Modifier
@@ -290,7 +306,10 @@ fun HomeScreen(
                             },
                             selectedCategory = selectedCategory,
                             currentUserRole = authViewModel.currentUser.collectAsState().value?.role ?: "",
-                            onEditClick = { product -> onNavigateToEditProduct(product.id) }
+                            onEditClick = { product -> onNavigateToEditProduct(product.id) },
+                            onDeleteClick = { product ->
+                                viewModel.handleIntent(ProductIntent.DeleteProduct(product)) // ou ta méthode deleteProduct
+                            }
 
                         )
                     }

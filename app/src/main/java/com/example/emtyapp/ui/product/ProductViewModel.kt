@@ -55,6 +55,14 @@ class ProductViewModel @Inject constructor(
                     }
                 )
             }
+            is ProductIntent.DeleteProduct -> {
+                deleteProduct(intent.product) { success ->
+                    if (!success) {
+                        _state.update { it.copy(error = "Erreur lors de la suppression") }
+                    }
+                }
+            }
+
         }
     }
 
@@ -195,6 +203,38 @@ class ProductViewModel @Inject constructor(
             }
         }
     }
+    fun addNewProduct(product: Product, onResult: (Boolean) -> Unit) {
+        viewModelScope.launch {
+            try {
+                val success = repository.addProduct(product)
+                if (success) {
+                    _allProducts = _allProducts + product
+                    _state.update { it.copy(products = _allProducts) }
+                }
+                onResult(success)
+            } catch (e: Exception) {
+                onResult(false)
+            }
+        }
+    }
+    fun deleteProduct(product: Product, onResult: (Boolean) -> Unit) {
+        viewModelScope.launch {
+            try {
+                val success = repository.deleteProduct(product.id)
+                if (success) {
+                    _allProducts = _allProducts.filter { it.id != product.id }
+                    _state.update { it.copy(products = _allProducts) }
+                    onResult(success)
+                } else {
+                    onResult(false)
+                }
+            } catch (e: Exception) {
+                onResult(false)
+            }
+        }
+    }
+
+
 
 
 

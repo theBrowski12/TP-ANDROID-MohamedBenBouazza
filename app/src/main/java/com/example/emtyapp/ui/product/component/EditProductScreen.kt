@@ -18,6 +18,9 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.runtime.Composable
 import com.example.emtyapp.ui.product.ProductViewModel
 
+import androidx.compose.material.icons.filled.ArrowBack
+
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EditProductScreen(
@@ -41,149 +44,168 @@ fun EditProductScreen(
 
     var expanded by remember { mutableStateOf(false) }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color(0xFF1E3D52))
-            .padding(16.dp)
-    ) {
-        TopAppBar(
-            title = { Text("Modifier le produit", color = Color(0xFF00D4FF)) },
-            navigationIcon = {
-                IconButton(onClick = onBack) {
-                    Icon(
-                        imageVector = Icons.Default.Close,
-                        contentDescription = "Retour",
-                        tint = Color(0xFF00D4FF)
-                    )
-                }
-            },
-            colors = TopAppBarDefaults.topAppBarColors(containerColor = Color(0xFF001F3F))
-        )
-
-        Spacer(modifier = Modifier.height(24.dp))
-
-        // Nom
-        OutlinedTextField(
-            value = name,
-            onValueChange = { name = it },
-            label = { Text("Nom", color = Color(0xFF00D4FF)) },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        // Description
-        OutlinedTextField(
-            value = description,
-            onValueChange = { description = it },
-            label = { Text("Description", color = Color(0xFF00D4FF)) },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        // Prix
-        OutlinedTextField(
-            value = price,
-            onValueChange = { price = it },
-            label = { Text("Prix", color = Color(0xFF00D4FF)) },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-            modifier = Modifier.fillMaxWidth(),
-            singleLine = true
-        )
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        // Ancien prix
-        OutlinedTextField(
-            value = oldPrice,
-            onValueChange = { oldPrice = it },
-            label = { Text("Ancien Prix", color = Color(0xFF00D4FF)) },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-            modifier = Modifier.fillMaxWidth(),
-            singleLine = true
-        )
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        // Quantité
-        OutlinedTextField(
-            value = quantity,
-            onValueChange = { quantity = it },
-            label = { Text("Quantité", color = Color(0xFF00D4FF)) },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-            modifier = Modifier.fillMaxWidth(),
-            singleLine = true
-        )
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        // Dropdown catégorie
-        ExposedDropdownMenuBox(
-            expanded = expanded,
-            onExpandedChange = { expanded = !expanded },
-            modifier = Modifier.fillMaxWidth()
+    Scaffold(
+        topBar = {
+            CenterAlignedTopAppBar(
+                title = {
+                    Text("Modifier le produit", color = Color(0xFF00D4FF))
+                },
+                navigationIcon = {
+                    IconButton(onClick = onBack) {
+                        Icon(
+                            imageVector = Icons.Default.ArrowBack,
+                            contentDescription = "Retour",
+                            tint = Color(0xFF00D4FF)
+                        )
+                    }
+                },
+                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                    containerColor = Color(0xFF001F3F)
+                )
+            )
+        },
+        containerColor = Color(0xFF1E3D52)
+    ) { padding ->
+        Column(
+            modifier = Modifier
+                .padding(padding)
+                .padding(16.dp)
+                .fillMaxSize()
         ) {
+            // Champ Nom
             OutlinedTextField(
-                readOnly = true,
-                value = category,
-                onValueChange = {},
-                label = { Text("Catégorie", color = Color(0xFF00D4FF)) },
-                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
-                modifier = Modifier.menuAnchor(),
+                value = name,
+                onValueChange = { name = it },
+                label = { Text("Nom", color = Color(0xFF00D4FF)) },
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            // Description
+            OutlinedTextField(
+                value = description,
+                onValueChange = { description = it },
+                label = { Text("Description", color = Color(0xFF00D4FF)) },
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            // Prix
+            OutlinedTextField(
+                value = price,
+                onValueChange = { price = it },
+                label = { Text("Prix", color = Color(0xFF00D4FF)) },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                modifier = Modifier.fillMaxWidth(),
                 singleLine = true
             )
-            ExposedDropdownMenu(
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            // Ancien prix
+            OutlinedTextField(
+                value = oldPrice,
+                onValueChange = { oldPrice = it },
+                label = { Text("Ancien Prix", color = Color(0xFF00D4FF)) },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                modifier = Modifier.fillMaxWidth(),
+                singleLine = true
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            // Quantité
+            OutlinedTextField(
+                value = quantity,
+                onValueChange = { quantity = it },
+                label = { Text("Quantité", color = Color(0xFF00D4FF)) },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                modifier = Modifier.fillMaxWidth(),
+                singleLine = true
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            // Catégorie (Dropdown)
+            ExposedDropdownMenuBox(
                 expanded = expanded,
-                onDismissRequest = { expanded = false }
+                onExpandedChange = { expanded = !expanded }
             ) {
-                categories.forEach { cat ->
-                    DropdownMenuItem(
-                        text = { Text(cat, color = Color.White) },
-                        onClick = {
-                            category = cat
-                            expanded = false
-                        }
-                    )
+                OutlinedTextField(
+                    readOnly = true,
+                    value = category,
+                    onValueChange = {},
+                    label = { Text("Catégorie", color = Color(0xFF00D4FF)) },
+                    trailingIcon = {
+                        ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
+                    },
+                    modifier = Modifier
+                        .menuAnchor()
+                        .fillMaxWidth(),
+                    singleLine = true
+                )
+                ExposedDropdownMenu(
+                    expanded = expanded,
+                    onDismissRequest = { expanded = false }
+                ) {
+                    categories.forEach { cat ->
+                        DropdownMenuItem(
+                            text = { Text(cat) },
+                            onClick = {
+                                category = cat
+                                expanded = false
+                            }
+                        )
+                    }
                 }
             }
-        }
 
-        Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
-        Button(
-            onClick = {
-                if (isFormValid) {
-                    val updatedProduct = product.copy(
-                        name = name,
-                        description = description,
-                        price = price.toDouble(),
-                        oldPrice = oldPrice.toDoubleOrNull() ?: price.toDouble(),
-                        quantity = quantity.toInt(),
-                        category = category
-                    )
-                    Toast.makeText(context, "Produit mis à jour", Toast.LENGTH_SHORT).show()
-                    onBack()
-                } else {
-                    Toast.makeText(context, "Veuillez remplir correctement le formulaire", Toast.LENGTH_SHORT).show()
-                }
-            },
-            enabled = isFormValid,
-            modifier = Modifier.fillMaxWidth(),
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF00D4FF))
-        ) {
-            Text("Enregistrer", color = Color.Black)
-        }
+            // Enregistrer
+            Button(
+                onClick = {
+                    if (isFormValid) {
+                        val updatedProduct = product.copy(
+                            name = name,
+                            description = description,
+                            price = price.toDouble(),
+                            oldPrice = oldPrice.toDoubleOrNull() ?: price.toDouble(),
+                            quantity = quantity.toInt(),
+                            category = category
+                        )
+                        viewModel.updateProduct(updatedProduct) { success ->
+                            if (success) {
+                                Toast.makeText(context, "Produit mis à jour", Toast.LENGTH_SHORT).show()
+                                onBack()
+                            } else {
+                                Toast.makeText(context, "Erreur lors de la mise à jour", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    } else {
+                        Toast.makeText(context, "Veuillez remplir correctement le formulaire", Toast.LENGTH_SHORT).show()
+                    }
+                },
+                enabled = isFormValid,
+                modifier = Modifier.fillMaxWidth(),
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF00D4FF))
+            ) {
+                Text("Enregistrer", color = Color.Black)
+            }
 
-        Spacer(modifier = Modifier.height(8.dp))
 
-        OutlinedButton(
-            onClick = onBack,
-            modifier = Modifier.fillMaxWidth(),
-            colors = ButtonDefaults.outlinedButtonColors(contentColor = Color(0xFF00D4FF))
-        ) {
-            Text("Annuler")
+            Spacer(modifier = Modifier.height(8.dp))
+
+            // Annuler
+            OutlinedButton(
+                onClick = onBack,
+                modifier = Modifier.fillMaxWidth(),
+                colors = ButtonDefaults.outlinedButtonColors(contentColor = Color(0xFF00D4FF))
+            ) {
+                Text("Annuler")
+            }
         }
     }
 }

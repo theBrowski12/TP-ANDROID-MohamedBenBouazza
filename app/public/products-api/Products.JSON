@@ -4,7 +4,7 @@
     "productTitle": "iPhone 14",
     "productPrice": 6900.0,
     "productOldPrice": 7999.0,
-    "productImageResId": 0,
+    "productImageResURL": "http://192.168.11.154:3000/assets/iphone14.png",
     "productQuantity": 5,
     "productDescription": "iPhone 14 avec puce A15 Bionic, écran Super Retina XDR 6.1\", caméra avancée avec mode cinématique.",
     "productCategory": "Électroniques"
@@ -14,7 +14,7 @@
     "productTitle": "Tablette Samsungq Galaxy Tab S7",
     "productPrice": 2500.0,
     "productOldPrice": 5888.0,
-    "productImageResId": 0,
+    "productImageResURL": "http://192.168.11.154:3000/assets/samsungtab.png",
     "productQuantity": 8,
     "productDescription": "Tablette 11\" WQXGA avec S-Pen inclus, processeur Snapdragon 865+, idéale pour le travail et le multimédia.",
     "productCategory": "Électroniques"
@@ -24,7 +24,7 @@
     "productTitle": "Trottinette Électrique Dualtron 2",
     "productPrice": 4889.0,
     "productOldPrice": 6888.0,
-    "productImageResId": 0,
+    "productImageResURL": "http://192.168.11.154:3000/assets/trotinette.jpg",
     "productQuantity": 12,
     "productDescription": "Trottinette puissante 2400W avec suspension hydraulique, autonomie de 80 km, adaptée aux trajets urbains.",
     "productCategory": "Véhicules"
@@ -34,7 +34,7 @@
     "productTitle": "Samsung Smart TV 50\" 4K",
     "productPrice": 3790.0,
     "productOldPrice": 4589.0,
-    "productImageResId": 0,
+    "productImageResURL": "http://192.168.11.154:3000/assets/tvsamsung.png",
     "productQuantity": 19,
     "productDescription": "Téléviseur 4K UHD avec HDR10+, Smart Hub intégré, compatibilité avec Bixby, Alexa et Google Assistant.",
     "productCategory": "Électroniques"
@@ -44,7 +44,7 @@
     "productTitle": "Pack Logo Digital HD",
     "productPrice": 50.0,
     "productOldPrice": 200.0,
-    "productImageResId": 0,
+    "productImageResURL": "http://192.168.11.154:3000/assets/logo.jpg",
     "productQuantity": 16,
     "productDescription": "Fichier logo vectoriel + déclinaisons HD, formats PSD, PNG et SVG pour impression et web.",
     "productCategory": "Digital"
@@ -54,7 +54,7 @@
     "productTitle": "Montre Fossil Homme Chrono",
     "productPrice": 850.0,
     "productOldPrice": 1099.0,
-    "productImageResId": 0,
+    "productImageResURL": "http://192.168.11.154:3000/assets/montre_fossil.jpg",
     "productQuantity": 6,
     "productDescription": "Montre chronographe avec boîtier inox, bracelet cuir marron et étanchéité 5 ATM.",
     "productCategory": "Montres"
@@ -64,7 +64,7 @@
     "productTitle": "Collier Or 18K Femme",
     "productPrice": 3200.0,
     "productOldPrice": 4500.0,
-    "productImageResId": 0,
+    "productImageResURL": "http://192.168.11.154:3000/assets/collier_or.jpg",
     "productQuantity": 3,
     "productDescription": "Collier fin en or jaune 18 carats avec pendentif cœur serti de zirconium, finition brillante.",
     "productCategory": "Joaillerie"
@@ -74,7 +74,7 @@
     "productTitle": "Vélo Électrique Urban E-Ride",
     "productPrice": 6900.0,
     "productOldPrice": 7890.0,
-    "productImageResId": 0,
+    "productImageResURL": "http://192.168.11.154:3000/assets/velo_electrique.jpg",
     "productQuantity": 7,
     "productDescription": "Vélo électrique 250W, batterie lithium amovible 36V, autonomie 60 km, cadre alu léger.",
     "productCategory": "Véhicules"
@@ -84,7 +84,7 @@
     "productTitle": "Caméra GoPro Hero 11",
     "productPrice": 4590.0,
     "productOldPrice": 5200.0,
-    "productImageResId": 0,
+    "productImageResURL": "http://192.168.11.154:3000/assets/gopro.jpg",
     "productQuantity": 9,
     "productDescription": "Caméra 5.3K 60fps, stabilisation HyperSmooth 5.0, étanche 10m, écran tactile avant/arrière.",
     "productCategory": "Électroniques"
@@ -94,7 +94,7 @@
     "productTitle": "Blazer Homme Slim Fit",
     "productPrice": 499.0,
     "productOldPrice": 699.0,
-    "productImageResId": 0,
+    "productImageResURL": "http://192.168.11.154:3000/assets/blazer_homme.jpg",
     "productQuantity": 25,
     "productDescription": "Blazer élégant coupe slim, tissu extensible, parfait pour les occasions formelles et casual chic.",
     "productCategory": "Homme"
@@ -104,7 +104,7 @@
     "productTitle": "Robe Femme Évasée",
     "productPrice": 329.0,
     "productOldPrice": 499.0,
-    "productImageResId": 0,
+    "productImageResURL": "http://192.168.11.154:3000/assets/robe_femme.jpg",
     "productQuantity": 18,
     "productDescription": "Robe midi en coton léger, col en V, manches 3/4, parfaite pour l'été ou les soirées décontractées.",
     "productCategory": "Femme"
@@ -114,7 +114,7 @@
     "productTitle": "Casque Moto Électrique Axxis",
     "productPrice": 780.0,
     "productOldPrice": 999.0,
-    "productImageResId": 0,
+    "productImageResURL": "http://192.168.11.154:3000/assets/casque_moto.webp",
     "productQuantity": 13,
     "productDescription": "Casque intégral homologué avec visière anti-rayures, doublure lavable, compatible Bluetooth.",
     "productCategory": "Électroniques"
@@ -124,7 +124,7 @@
     "productTitle": "Veste en Jean Homme",
     "productPrice": 399.0,
     "productOldPrice": 499.0,
-    "productImageResId": 0,
+    "productImageResURL": "http://192.168.11.154:3000/assets/veste_jean.png",
     "productQuantity": 14,
     "productDescription": "Veste classique en denim bleu avec boutons métalliques, coupe droite, idéale pour l'automne.",
     "productCategory": "Homme"
@@ -134,7 +134,7 @@
     "productTitle": "Polo Lacoste Slim Fit",
     "productPrice": 549.0,
     "productOldPrice": 699.0,
-    "productImageResId": 0,
+    "productImageResURL": "http://192.168.11.154:3000/assets/polo_lacoste.jpg",
     "productQuantity": 20,
     "productDescription": "Polo homme manches courtes en coton piqué avec col classique, logo brodé sur la poitrine.",
     "productCategory": "Homme"
@@ -144,7 +144,7 @@
     "productTitle": "Sneakers Nike Air Max",
     "productPrice": 899.0,
     "productOldPrice": 1099.0,
-    "productImageResId": 0,
+    "productImageResURL": "http://192.168.11.154:3000/assets/nike_airmax.webp",
     "productQuantity": 9,
     "productDescription": "Chaussures sport confortables avec semelle Air, design moderne et respirant, couleur noire/grise.",
     "productCategory": "Homme"
@@ -154,7 +154,7 @@
     "productTitle": "T-shirt Graphique Urban",
     "productPrice": 199.0,
     "productOldPrice": 249.0,
-    "productImageResId": 0,
+    "productImageResURL": "http://192.168.11.154:3000/assets/tshirt_graphique.webp",
     "productQuantity": 35,
     "productDescription": "T-shirt à imprimé streetwear, coton doux, col rond, coupe moderne, disponible en plusieurs tailles.",
     "productCategory": "Homme"
@@ -164,7 +164,7 @@
     "productTitle": "Montre Sport Casio",
     "productPrice": 299.0,
     "productOldPrice": 399.0,
-    "productImageResId": 0,
+    "productImageResURL": "http://192.168.11.154:3000/assets/montre_casio.jpg",
     "productQuantity": 13,
     "productDescription": "Montre digitale étanche avec chronomètre, alarme et éclairage LED, idéale pour le sport.",
     "productCategory": "Montres"
@@ -174,7 +174,7 @@
     "productTitle": "Blouson Cuir Véritable",
     "productPrice": 1200.0,
     "productOldPrice": 1450.0,
-    "productImageResId": 0,
+    "productImageResURL": "http://192.168.11.154:3000/assets/blouson_cuir.jpg",
     "productQuantity": 4,
     "productDescription": "Blouson en cuir noir 100% véritable, doublure intérieure chaude, fermeture zippée de qualité.",
     "productCategory": "Homme"
@@ -184,7 +184,7 @@
     "productTitle": "Robe Longue Fleurie",
     "productPrice": 429.0,
     "productOldPrice": 599.0,
-    "productImageResId": 0,
+    "productImageResURL": "http://192.168.11.154:3000/assets/robe_fleurie.jpg",
     "productQuantity": 11,
     "productDescription": "Robe longue fluide à motifs floraux, col en V, manches courtes, parfaite pour l’été.",
     "productCategory": "Femme"
@@ -194,7 +194,7 @@
     "productTitle": "Sac à Main Cuir Camel",
     "productPrice": 699.0,
     "productOldPrice": 850.0,
-    "productImageResId": 0,
+    "productImageResURL": "http://192.168.11.154:3000/assets/sac_cuir_camel.jpg",
     "productQuantity": 6,
     "productDescription": "Sac à main en cuir véritable, couleur camel, bandoulière réglable, poches internes zippées.",
     "productCategory": "Femme"
@@ -204,7 +204,7 @@
     "productTitle": "Talons Aiguilles Noirs",
     "productPrice": 379.0,
     "productOldPrice": 489.0,
-    "productImageResId": 0,
+    "productImageResURL": "http://192.168.11.154:3000/assets/talons_noirs.jpeg",
     "productQuantity": 17,
     "productDescription": "Escarpins élégants en simili cuir noir, hauteur 8cm, semelle antidérapante, fermeture discrète.",
     "productCategory": "Femme"
@@ -214,7 +214,7 @@
     "productTitle": "Ensemble de Sport Femme",
     "productPrice": 299.0,
     "productOldPrice": 399.0,
-    "productImageResId": 0,
+    "productImageResURL": "http://192.168.11.154:3000/assets/ensemble_sport.webp",
     "productQuantity": 22,
     "productDescription": "Ensemble legging + brassière, tissu extensible, respirant et anti-transpiration, idéal fitness et yoga.",
     "productCategory": "Femme"
@@ -224,7 +224,7 @@
     "productTitle": "Montre Femme Dorée",
     "productPrice": 549.0,
     "productOldPrice": 699.0,
-    "productImageResId": 0,
+    "productImageResURL": "http://192.168.11.154:3000/assets/montre_doree.jpg",
     "productQuantity": 7,
     "productDescription": "Montre chic dorée à quartz, bracelet en acier inoxydable, boîtier fin et élégant.",
     "productCategory": "Montres"
@@ -234,7 +234,7 @@
     "productTitle": "Blazer Femme Tailleur",
     "productPrice": 459.0,
     "productOldPrice": 599.0,
-    "productImageResId": 0,
+    "productImageResURL": "http://192.168.11.154:3000/assets/blazer_femme.jpg",
     "productQuantity": 10,
     "productDescription": "Blazer coupe tailleur, tissu fluide, bouton doré, parfait pour look bureau ou soirée.",
     "productCategory": "Femme"
@@ -244,7 +244,7 @@
     "productTitle": "Produit Bientôt Disponible",
     "productPrice": 0.0,
     "productOldPrice": 0.0,
-    "productImageResId": 0,
+    "productImageResURL": "http://192.168.11.154:3000/assets/upcoming.jpeg",
     "productQuantity": 10,
     "productDescription": "Produit innovant en cours de préparation, restez connectés pour plus de détails très bientôt.",
     "productCategory": "Upcoming"

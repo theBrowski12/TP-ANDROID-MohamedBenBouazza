@@ -29,6 +29,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import coil.compose.rememberAsyncImagePainter
 import com.example.emtyapp.ui.auth.AuthViewModel
 import com.example.emtyapp.ui.product.ProductIntent
 import com.example.emtyapp.ui.product.ProductViewModel
@@ -221,7 +222,7 @@ fun DetailsScreen(
                     ) {
                         Box(contentAlignment = Alignment.Center) {
                             Image(
-                                painter = painterResource(id = product.imageResId),
+                                painter = rememberAsyncImagePainter(product.imageResURL),
                                 contentDescription = product.name,
                                 contentScale = ContentScale.Fit,
                                 modifier = Modifier.fillMaxSize()
@@ -239,7 +240,14 @@ fun DetailsScreen(
                         ),
                         textAlign = TextAlign.Center
                     )
-
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(
+                        text = "Catégorie : ${product.category}",
+                        style = MaterialTheme.typography.bodyMedium.copy(
+                            fontWeight = FontWeight.SemiBold,
+                            color = Color(0xFF5D4037)
+                        )
+                    )
                     Spacer(modifier = Modifier.height(8.dp))
 
                     Text(
@@ -321,6 +329,7 @@ fun DetailsScreen(
                         Spacer(modifier = Modifier.width(8.dp))
                         Text("Acheter", color = Color.White)
                     }
+
                 }
             }
         }

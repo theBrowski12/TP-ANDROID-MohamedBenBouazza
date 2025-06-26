@@ -1,6 +1,8 @@
 package com.example.emtyapp.data.DI
 
 import com.example.emtyapp.data.API.ProductApi
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,7 +18,9 @@ import javax.inject.Singleton
 object NetworkModule {
 
     @Provides
-    fun provideBaseUrl(): String = "https://raw.githubusercontent.com/theBrowski12/TP-ANDROID-MohamedBenBouazza/master/app/public/products-api/"
+    fun provideBaseUrl(): String = "http://192.168.11.154:3000/"
+    //fun provideBaseUrl(): String = "https://raw.githubusercontent.com/theBrowski12/TP-ANDROID-MohamedBenBouazza/master/app/public/products-api/"
+    //hna ndiro ip adress:3000/
     @Provides
     @Singleton
     fun provideOkHttpClient(): OkHttpClient {
@@ -27,11 +31,18 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideRetrofit(baseUrl: String, client: OkHttpClient): Retrofit =
+    fun provideGson(): Gson =
+        GsonBuilder()
+            .setLenient()  // ← IMPORTANT pour accepter JSON plus souple
+            .create()
+
+    @Provides
+    @Singleton
+    fun provideRetrofit(baseUrl: String, client: OkHttpClient, gson: Gson): Retrofit =
         Retrofit.Builder()
             .baseUrl(baseUrl)
             .client(client)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson)) // ← ICI on injecte le Gson
             .build()
 
     @Provides
