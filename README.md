@@ -84,7 +84,8 @@ This is a complete 🛒 Ecommerce Android application built with **Jetpack Compo
 
 ![Login Screen](https://github.com/user-attachments/assets/be18ac16-1fa1-41c7-9191-5753fc2b1b19)
 
-![Register Screen](https://github.com/user-attachments/assets/7a605fb4-34e1-4039-a597-614099a95052)
+![Register Screen](https://github.com/user-attachments/assets/0fa7137c-6bf8-43fd-9a30-b9fa00da4928)
+
 
 ---
 
