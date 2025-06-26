@@ -43,7 +43,14 @@ fun EditProductScreen(
     )
 
     var expanded by remember { mutableStateOf(false) }
-
+    LaunchedEffect(product.id) {
+        name = product.name
+        description = product.description ?: ""
+        price = product.price.toString()
+        oldPrice = product.oldPrice.toString()
+        quantity = product.quantity.toString()
+        category = product.category
+    }
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(

@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 import java.net.URL
 
 data class Product(
-    @SerializedName("_id")
+    @SerializedName("productID")
     val id: String,
     @SerializedName("productTitle")
     val name: String,
