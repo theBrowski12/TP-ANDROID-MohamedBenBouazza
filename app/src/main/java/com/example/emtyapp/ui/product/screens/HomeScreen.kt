@@ -201,7 +201,11 @@ fun HomeScreen(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceAround
                 ) {
-                    IconButton(onClick = { /* Home action */ }) {
+                    IconButton(onClick = {
+                        selectedCategory = "Tous"
+                        searchQuery = ""
+                        isSearchActive = false
+                        viewModel.handleIntent(ProductIntent.LoadProducts) }) {
                         Icon(
                             Icons.Default.Home,
                             contentDescription = "Home",
