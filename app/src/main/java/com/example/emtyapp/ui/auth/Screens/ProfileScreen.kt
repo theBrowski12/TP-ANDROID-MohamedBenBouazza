@@ -189,7 +189,7 @@ fun ProfileScreen(
                         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF0059D4)),
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(bottom = 16.dp)
+
                     ) {
                         Text("Voir tous les utilisateurs", color = Color.White)
                     }

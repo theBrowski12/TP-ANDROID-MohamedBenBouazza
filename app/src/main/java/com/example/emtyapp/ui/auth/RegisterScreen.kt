@@ -43,6 +43,7 @@ fun RegisterScreen(
 
     LaunchedEffect(currentUser) {
         if (currentUser != null) {
+            onRegisterSuccess()
             showSuccessDialog = true
         }
     }
