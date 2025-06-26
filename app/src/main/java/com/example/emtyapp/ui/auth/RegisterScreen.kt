@@ -4,13 +4,18 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.emtyapp.data.Entities.User
@@ -34,67 +39,82 @@ fun RegisterScreen(
     var showSuccessDialog by remember { mutableStateOf(false) }
     val errorMessage by authViewModel.errorMessage.collectAsState()
     val currentUser by authViewModel.currentUser.collectAsState()
-
-    // Pour indiquer que mot de passe et confirmation sont différents
     val passwordsMatch = password == confirmPassword || confirmPassword.isEmpty()
 
     LaunchedEffect(currentUser) {
         if (currentUser != null) {
-            onRegisterSuccess()
             showSuccessDialog = true
         }
     }
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = { Text("Inscription", color = Color(0xFF00D4FF)) },
-                navigationIcon = {
-                    IconButton(onClick = onNavigateToLogin) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Retour", tint = Color(0xFF00D4FF))
-                    }
+            CenterAlignedTopAppBar(
+                title = {
+                    Text(
+                        text = "Register",
+                        style = MaterialTheme.typography.headlineMedium.copy(
+                            fontWeight = FontWeight.ExtraBold,
+                            color = Color(0xFF00D4FF)
+                        )
+                    )
                 },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = Color(0xFF2A2A3A))
+                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                    containerColor = Color(0xFF001F2D)
+                )
             )
         },
         bottomBar = {
-            BottomAppBar(containerColor = Color(0xFF00135E)) {
+            BottomAppBar(containerColor = Color(0xFF001F2D)) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceAround
                 ) {
                     IconButton(onClick = onNavigateToHome) {
-                        Icon(Icons.Default.Home, contentDescription = "Accueil", tint = Color(0xFF00D4FF))
+                        Icon(Icons.Default.Home, contentDescription = "Home", tint = Color(0xFF00D4FF))
                     }
                     IconButton(onClick = onNavigateToLogin) {
                         Icon(Icons.Default.Person, contentDescription = "Login", tint = Color(0xFF00D4FF))
                     }
                     IconButton(onClick = onNavigateToCart) {
-                        Icon(Icons.Default.ShoppingCart, contentDescription = "Panier", tint = Color(0xFF00D4FF))
+                        Icon(Icons.Default.ShoppingCart, contentDescription = "Cart", tint = Color(0xFF00D4FF))
                     }
                 }
             }
-        }
+        },
+        containerColor = Color(0xFF001F2D)
     ) { innerPadding ->
         Column(
             modifier = Modifier
-                .padding(innerPadding)
                 .fillMaxSize()
-                .padding(16.dp)
-                .background(Color(0xFF0A0A12)),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+                .padding(innerPadding)
+                .padding(horizontal = 24.dp)
+                .background(
+                    brush = Brush.verticalGradient(
+                        colors = listOf(Color(0xFF001F2D), Color(0xFF004B75))
+                    )
+                ),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("Créer un compte", style = MaterialTheme.typography.headlineLarge, color = Color(0xFF00D4FF))
+            Text(
+                text = "Créer un compte",
+                fontSize = 30.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color(0xFF00D4FF)
+            )
 
             Spacer(modifier = Modifier.height(24.dp))
 
             OutlinedTextField(
                 value = name,
-                onValueChange = { name = it
-                    authViewModel.clearError()},
-                label = { Text("Nom complet") },
+                onValueChange = {
+                    name = it
+                    authViewModel.clearError()
+                },
+                label = { Text("Nom complet", color = Color(0xFF00D4FF)) },
                 modifier = Modifier.fillMaxWidth(),
+                singleLine = true,
                 shape = RoundedCornerShape(12.dp),
                 colors = fieldColors()
             )
@@ -106,10 +126,10 @@ fun RegisterScreen(
                 onValueChange = {
                     email = it
                     authViewModel.clearError()
-                }
-                ,
-                label = { Text("Email") },
+                },
+                label = { Text("Email", color = Color(0xFF00D4FF)) },
                 modifier = Modifier.fillMaxWidth(),
+                singleLine = true,
                 shape = RoundedCornerShape(12.dp),
                 colors = fieldColors()
             )
@@ -118,13 +138,15 @@ fun RegisterScreen(
 
             OutlinedTextField(
                 value = password,
-                onValueChange = { password = it
+                onValueChange = {
+                    password = it
                     authViewModel.clearError()
                 },
-                label = { Text("Mot de passe") },
+                label = { Text("Mot de passe", color = Color(0xFF00D4FF)) },
                 modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(12.dp),
+                singleLine = true,
                 visualTransformation = PasswordVisualTransformation(),
+                shape = RoundedCornerShape(12.dp),
                 colors = fieldColors()
             )
 
@@ -132,24 +154,24 @@ fun RegisterScreen(
 
             OutlinedTextField(
                 value = confirmPassword,
-                onValueChange = { confirmPassword = it
+                onValueChange = {
+                    confirmPassword = it
                     authViewModel.clearError()
                 },
-                label = { Text("Confirmer mot de passe") },
+                label = { Text("Confirmer mot de passe", color = Color(0xFF00D4FF)) },
                 modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(12.dp),
+                singleLine = true,
                 visualTransformation = PasswordVisualTransformation(),
-                colors = fieldColors(),
-                isError = !passwordsMatch
+                shape = RoundedCornerShape(12.dp),
+                isError = !passwordsMatch,
+                colors = fieldColors()
             )
 
             if (!passwordsMatch) {
                 Text(
                     text = "Les mots de passe ne correspondent pas",
                     color = Color.Red,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 12.dp, top = 4.dp)
+                    modifier = Modifier.padding(top = 4.dp)
                 )
             }
 
@@ -164,9 +186,10 @@ fun RegisterScreen(
                     readOnly = true,
                     value = role,
                     onValueChange = {},
-                    label = { Text("Rôle") },
+                    label = { Text("Rôle", color = Color(0xFF00D4FF)) },
                     trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded) },
                     modifier = Modifier.menuAnchor().fillMaxWidth(),
+                    shape = RoundedCornerShape(12.dp),
                     colors = fieldColors()
                 )
 
@@ -183,66 +206,66 @@ fun RegisterScreen(
                 }
             }
 
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(20.dp))
 
-            // Affiche erreur si email déjà utilisé (ou autre erreur renvoyée par le ViewModel)
             errorMessage?.let {
-                Text(it, color = Color.Red, modifier = Modifier.padding(8.dp))
-                Spacer(modifier = Modifier.height(8.dp))
+                Text(it, color = Color.Red, modifier = Modifier.padding(bottom = 8.dp))
             }
 
             Button(
                 onClick = {
                     if (validateInputs(name, email, password, confirmPassword)) {
-                        authViewModel.register(
-                            User(name = name, email = email, password = password, role = role)
-                        )
+                        authViewModel.register(User(name, email, password, role))
                     }
                 },
                 enabled = passwordsMatch,
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF00B8D4)),
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(50.dp),
+                shape = RoundedCornerShape(14.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF00D4FF))
             ) {
-                Text("S'inscrire", fontSize = 16.sp, color = Color.White)
+                Text("S'inscrire", color = Color.Black, fontWeight = FontWeight.Bold)
             }
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            Row {
-                Text("Déjà un compte ?", color = Color.LightGray)
-                TextButton(onClick = onNavigateToLogin) {
-                    Text("Connexion", color = Color(0xFF00D4FF))
-                }
+            TextButton(onClick = onNavigateToLogin) {
+                Text("Déjà un compte ? Connexion", color = Color(0xFF00D4FF))
             }
         }
     }
+
     if (showSuccessDialog) {
         AlertDialog(
-            onDismissRequest = { /* Rien */ },
+            onDismissRequest = { },
             confirmButton = {
                 TextButton(onClick = {
                     showSuccessDialog = false
-                    onRegisterSuccess() // redirection vers Home ou autre
+                    onRegisterSuccess()
                 }) {
                     Text("OK", color = Color(0xFF00D4FF))
                 }
             },
             title = { Text("Succès", color = Color.White) },
-            text = { Text("Inscription réussie !", color = Color.LightGray) },
-            containerColor = Color(0xFF1E1E2C),
+            text = { Text("Inscription réussie !", color = Color(0xFFDDDDDD)) },
+            containerColor = Color(0xFF2A2A3A),
             shape = RoundedCornerShape(12.dp)
         )
     }
-
 }
 
 @Composable
 private fun fieldColors() = OutlinedTextFieldDefaults.colors(
+    focusedTextColor = Color.White,
+    unfocusedTextColor = Color.White.copy(alpha = 0.7f),
+    cursorColor = Color(0xFF00D4FF),
     focusedBorderColor = Color(0xFF00D4FF),
-    unfocusedBorderColor = Color(0xFFA0A0CC),
+    unfocusedBorderColor = Color(0xFF006680),
     focusedLabelColor = Color(0xFF00D4FF),
-    unfocusedLabelColor = Color(0xFFA0A0CC),
-    cursorColor = Color(0xFF00D4FF)
+    unfocusedLabelColor = Color(0xFF00D4FF).copy(alpha = 0.7f),
+    errorBorderColor = Color.Red,
+    errorLabelColor = Color.Red
 )
 
 private fun validateInputs(
