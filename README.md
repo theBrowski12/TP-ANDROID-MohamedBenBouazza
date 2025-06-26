@@ -69,6 +69,16 @@ This is a sample Ecommerce Android application built with Jetpack Compose follow
 ![WhatsApp Image 2025-06-26 at 17 18 19_db8200ff](https://github.com/user-attachments/assets/408fc23a-55e6-4fb9-bc9f-1d6d383fbf46)
 
 
+### Login Screen
+
+![WhatsApp Image 2025-06-26 at 17 21 30_ad0e3eb2](https://github.com/user-attachments/assets/be18ac16-1fa1-41c7-9191-5753fc2b1b19)
+
+### Register Screen
+
+![WhatsApp Image 2025-06-26 at 17 21 30_eba1e627](https://github.com/user-attachments/assets/7a605fb4-34e1-4039-a597-614099a95052)
+
+
+
 ### User Profile Screen
 
 ![WhatsApp Image 2025-06-26 at 17 05 06_7e865c3a](https://github.com/user-attachments/assets/bf289a13-41ef-4390-9468-4bcab1491370)
