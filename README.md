@@ -66,7 +66,7 @@ This is a sample Ecommerce Android application built with Jetpack Compose follow
 
 ![WhatsApp Image 2025-06-26 at 17 05 06_7e865c3a](https://github.com/user-attachments/assets/bf289a13-41ef-4390-9468-4bcab1491370)
 
-### Admin Home Screen (with extra functionality ilke : Add Product, Edit Product , Delete Product)
+### Admin Home Screen (Admin Only with extra functionality ilke : Add Product, Edit Product , Delete Product)
 
 ![WhatsApp Image 2025-06-26 at 17 12 40_75b909b8](https://github.com/user-attachments/assets/3ef2395d-20d4-4b81-ad32-d61d41d5d47a)
 
@@ -77,7 +77,9 @@ This is a sample Ecommerce Android application built with Jetpack Compose follow
 
 ### User Management Screen (Admin Only)
 
-![User Management Placeholder](https://via.placeholder.com/400x800?text=User+Management)
+![WhatsApp Image 2025-06-26 at 17 15 23_0d1730c6](https://github.com/user-attachments/assets/f1e4e121-5e4c-48ae-a98c-d9783b1abfec)
+
+![WhatsApp Image 2025-06-26 at 17 15 23_159d519f](https://github.com/user-attachments/assets/21619209-e19c-4e13-be13-de8a301a8c47)
 
 ---
 
