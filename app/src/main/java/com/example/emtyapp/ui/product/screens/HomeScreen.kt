@@ -32,6 +32,7 @@ import com.example.emtyapp.ui.auth.AuthViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
+
     authViewModel: AuthViewModel,
     viewModel: ProductViewModel,
     onNavigateToDetails: (String) -> Unit,
@@ -64,7 +65,11 @@ fun HomeScreen(
     LaunchedEffect(viewModel) {
         viewModel.handleIntent(ProductIntent.LoadProducts)
     }
-
+    LaunchedEffect(currentUser) {
+        if (currentUser != null) {
+            viewModel.clearCart()
+        }
+    }
     LaunchedEffect(searchQuery) {
         if (searchQuery.length > 2) {
             viewModel.handleIntent(ProductIntent.SearchProducts(searchQuery))
@@ -163,7 +168,10 @@ fun HomeScreen(
                                 maxLines = 1,
                                 modifier = Modifier.padding(end = 8.dp)
                             )
-                            TextButton(onClick = { authViewModel.logout() }) {
+                            TextButton(onClick = {
+                                authViewModel.logout()
+                                viewModel.clearCart() // 👈 Vide le panier
+                            }) {
                                 Text("Logout", color = Color(0xFF00ACC1))
                             }
                         }

@@ -158,7 +158,7 @@ class ProductViewModel @Inject constructor(
         calculateTotal()
     }
 
-    private fun clearCart() {
+    fun clearCart() {
         _cartItems.update { emptyList() }
         _cartTotal.value = 0.0
     }

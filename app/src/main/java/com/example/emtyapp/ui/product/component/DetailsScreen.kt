@@ -86,9 +86,13 @@ fun DetailsScreen(
                                 maxLines = 1,
                                 modifier = Modifier.padding(end = 8.dp)
                             )
-                            TextButton(onClick = { authViewModel.logout() }) {
+                            TextButton(onClick = {
+                                authViewModel.logout()
+                                viewModel.clearCart() // 👈 maintenant correct
+                            }) {
                                 Text("Logout", color = Color(0xFF00ACC1))
                             }
+
                         }
                     } else {
                         TextButton(onClick = onLoginClick) {

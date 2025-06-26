@@ -177,6 +177,7 @@ fun ProfileScreen(
                     onClick = onLogout,
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF00B8D4)),
                     modifier = Modifier.fillMaxWidth()
+
                 ) {
                     Text("Se déconnecter", color = Color.White)
                 }
