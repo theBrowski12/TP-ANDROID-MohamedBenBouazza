@@ -48,21 +48,23 @@ This is a sample Ecommerce Android application built with Jetpack Compose follow
 ### Home Screen (Product List with Categories and Search)
 
 ![image](https://github.com/user-attachments/assets/901ed56c-75f6-4172-beaf-618f6b938523)
-![image](https://github.com/user-attachments/assets/901ed56c-75f6-4172-beaf-618f6b938523)
+![image](https://github.com/user-attachments/assets/4af31e4b-6a25-4a4f-9eaf-4d0a0f01edc0)
+
 
 
 
 ### Product Details Screen
 
-![Product Details Placeholder](https://via.placeholder.com/400x800?text=Product+Details)
+![image](https://github.com/user-attachments/assets/2a3e470a-2922-4957-9d10-665dbb538b6f)
 
 ### Shopping Cart Screen
 
-![Shopping Cart Placeholder](https://via.placeholder.com/400x800?text=Shopping+Cart)
+![image](https://github.com/user-attachments/assets/122619b5-2e48-4a80-ab4f-c0ccbfb822ca)
 
 ### User Profile Screen
 
-![User Profile Placeholder](https://via.placeholder.com/400x800?text=User+Profile)
+![WhatsApp Image 2025-06-26 at 17 05 06_7e865c3a](https://github.com/user-attachments/assets/bf289a13-41ef-4390-9468-4bcab1491370)
+
 
 ### Admin Product Management Screen
 
