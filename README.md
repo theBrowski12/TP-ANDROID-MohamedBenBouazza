@@ -1,4 +1,3 @@
-Work is in Master Branch !
 
 # 🚀 TP-ANDROID-MohamedBenBouazza
 
