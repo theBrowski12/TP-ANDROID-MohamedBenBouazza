@@ -56,6 +56,7 @@ This is a complete 🛒 Ecommerce Android application built with **Jetpack Compo
 ### 🏠 Home Screen
 
 ![Home Screen 1](https://github.com/user-attachments/assets/9d00609d-2d2f-4f26-a7e6-b4471d4ee8e0)
+
 ![Home Screen 2:with category](https://github.com/user-attachments/assets/ef99f387-fd6f-4cc2-a91e-46aa4cfe797a)
 
 ---
@@ -81,6 +82,7 @@ This is a complete 🛒 Ecommerce Android application built with **Jetpack Compo
 ### 🔐 Login / ✍️ Register
 
 ![Login Screen](https://github.com/user-attachments/assets/be18ac16-1fa1-41c7-9191-5753fc2b1b19)
+
 ![Register Screen](https://github.com/user-attachments/assets/7a605fb4-34e1-4039-a597-614099a95052)
 
 ---
@@ -94,13 +96,22 @@ This is a complete 🛒 Ecommerce Android application built with **Jetpack Compo
 ### 👑 Admin Screens
 
 **Admin Home (Add / Edit / Delete Products):**  
+
 ![Admin Home](https://github.com/user-attachments/assets/3ef2395d-20d4-4b81-ad32-d61d41d5d47a)
 
 **Product Management:**  
+ 📥Edit Product:
+ 
 ![Admin Product Management](https://github.com/user-attachments/assets/d3145744-f333-40fc-90bf-318377f76f7d)
 
+ 🛍️Add new Product :
+ 
+![WhatsApp Image 2025-06-26 at 17 28 05_99d72c8d](https://github.com/user-attachments/assets/30f006ba-eeb1-490b-968e-84b69b3fb184)
+
 **User Management:**  
-![Admin User Management 1](https://github.com/user-attachments/assets/f1e4e121-5e4c-48ae-a98c-d9783b1abfec)  
+
+![Admin User Management 1](https://github.com/user-attachments/assets/f1e4e121-5e4c-48ae-a98c-d9783b1abfec) 
+
 ![Admin User Management 2](https://github.com/user-attachments/assets/21619209-e19c-4e13-be13-de8a301a8c47)
 
 ---
