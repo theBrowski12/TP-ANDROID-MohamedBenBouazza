@@ -28,6 +28,13 @@ import com.example.emtyapp.ui.product.component.ProductsList
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material3.FilterChipDefaults
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Shadow
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.emtyapp.ui.auth.AuthViewModel
 
@@ -292,6 +299,25 @@ fun HomeScreen(
                 .fillMaxSize()
         ) {
             // Categories Section with LazyRow
+            Text(
+                text = "Nos Catégories",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 16.dp),
+                textAlign = TextAlign.Center,
+                style = androidx.compose.ui.text.TextStyle(
+                    color = Color(0xFF00E5FF), // Bleu néon clair
+                    fontSize = 28.sp,
+                    fontWeight = FontWeight.ExtraBold,
+                    fontFamily = FontFamily.SansSerif,
+                    shadow = Shadow(
+                        color = Color(0xFF00E5FF),
+                        offset = Offset(0f, 0f),
+                        blurRadius = 12f
+                    ),
+                    letterSpacing = 2.sp
+                )
+            )
             LazyRow(
                 modifier = Modifier.padding(vertical = 8.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
