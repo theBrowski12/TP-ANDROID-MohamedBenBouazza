@@ -30,6 +30,9 @@ import com.example.emtyapp.ui.product.ProductViewModel
 import com.example.emtyapp.ui.product.openWhatsAppWithMessage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import android.content.Context
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import coil.compose.rememberAsyncImagePainter
 import com.example.emtyapp.data.Entities.Order
@@ -50,17 +53,18 @@ fun CartScreen(
     navController: NavController,
     viewModel: ProductViewModel,
     authViewModel: AuthViewModel
-
 ) {
     val orderViewModel: OrderViewModel = hiltViewModel()
     val context = LocalContext.current
     val cartItems by viewModel.cartItems.collectAsState()
     val totalPrice by viewModel.cartTotal.collectAsState()
+    var address by remember { mutableStateOf("") }
     val whatsappMessage = buildString {
         append("Bonjour, je suis intéressé par les produits :\n")
         cartItems.forEach { item ->
             append("- ${item.product.name} (Quantité: ${item.quantity})\n")
         }
+        append("Adresse de livraison: $address\n")
     }
     val currentUser by authViewModel.currentUser.collectAsState()
     val userId = currentUser?.id ?: ""
@@ -111,17 +115,17 @@ fun CartScreen(
                                     total = totalPrice,
                                     status = "En attente",
                                     items = orderItems
-
                                 )
                                 orderViewModel.createOrder(order) {
-                                    // ✅ Action à faire après création, ou simplement vider le panier :
+                                    // Après création, vider le panier
                                     viewModel.clearCart()
+                                    address = "" // Optionnel : vider l'adresse aussi
                                 }
                             }
 
                             openWhatsAppWithMessage(
                                 context = context,
-                                phoneNumber = "0646564984", // Replace with your number
+                                phoneNumber = "0646564984", // Remplace par ton numéro
                                 message = whatsappMessage
                             )
                         },
@@ -133,42 +137,57 @@ fun CartScreen(
             }
         }
     ) { innerPadding ->
-        if (cartItems.isEmpty()) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding),
-                contentAlignment = Alignment.Center
-            ) {
-                Text("Votre panier est vide")
-            }
-        } else {
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(innerPadding)
-                    .padding(horizontal = 16.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                items(cartItems, key = { it.product.id }) { cartItem ->
-                    CartItemCard(
-                        cartItem = cartItem,
-                        onIncreaseQuantity = {
-                            viewModel.handleIntent(ProductIntent.IncrementQuantity(cartItem.product.id))
-                        },
-                        onDecreaseQuantity = {
-                            viewModel.handleIntent(ProductIntent.DecrementQuantity(cartItem.product.id))
-                        },
-                        onRemoveItem = {
-                            viewModel.handleIntent(ProductIntent.RemoveFromCart(cartItem.product.id))
-                        }
-                    )
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+                .padding(horizontal = 16.dp)
+        ) {
+            if (cartItems.isEmpty()) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text("Votre panier est vide")
                 }
+            } else {
+                LazyColumn(
+                    modifier = Modifier.weight(1f), // occupe tout l’espace vertical sauf le TextField
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    items(cartItems, key = { it.product.id }) { cartItem ->
+                        CartItemCard(
+                            cartItem = cartItem,
+                            onIncreaseQuantity = {
+                                viewModel.handleIntent(ProductIntent.IncrementQuantity(cartItem.product.id))
+                            },
+                            onDecreaseQuantity = {
+                                viewModel.handleIntent(ProductIntent.DecrementQuantity(cartItem.product.id))
+                            },
+                            onRemoveItem = {
+                                viewModel.handleIntent(ProductIntent.RemoveFromCart(cartItem.product.id))
+                            }
+                        )
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                // Champ texte Adresse
+                OutlinedTextField(
+                    value = address,
+                    onValueChange = { address = it },
+                    label = { Text("Adresse de livraison") },
+                    placeholder = { Text("Entrez votre adresse ici") },
+                    modifier = Modifier.fillMaxWidth(),
+                    singleLine = false,
+                    maxLines = 3
+                )
             }
         }
     }
 }
-
 
 @Composable
 fun CartItemCard(
