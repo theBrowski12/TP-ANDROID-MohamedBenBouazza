@@ -31,12 +31,14 @@ class OrderRepository @Inject constructor(
 
     suspend fun updateOrderStatus(orderId: String, status: String): Boolean {
         return try {
-            api.updateOrderStatus(orderId, status)
+            api.updateOrderStatus(orderId, mapOf("status" to status))
             true
         } catch (e: Exception) {
+            Log.e("OrderRepository", "Erreur mise à jour statut: ${e.message}")
             false
         }
     }
+
     suspend fun deleteOrder(orderId: String): Boolean {
         return try {
             api.deleteOrder(orderId)
@@ -44,6 +46,14 @@ class OrderRepository @Inject constructor(
         } catch (e: Exception) {
             Log.e("OrderRepository", "Erreur suppression commande: ${e.message}")
             false
+        }
+    }
+    suspend fun getAllOrders(): List<Order> {
+        return try {
+            api.getAllOrders()
+        } catch (e: Exception) {
+            Log.e("OrderRepository", "Erreur récupération commandes admin", e)
+            emptyList()
         }
     }
 

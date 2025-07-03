@@ -15,11 +15,17 @@ interface OrderApi {
     @PUT("orders/{id}")
     suspend fun updateOrderStatus(
         @Path("id") id: String,
-        @Body statusUpdate: String
+        @Body statusUpdate: Map<String, String>  // <-- Ici on attend une map
     )
+
     @POST("orders")
     suspend fun createOrder(@Body order: Order)
 
     @DELETE("orders/{id}")
     suspend fun deleteOrder(@Path("id") id: String)
+
+    @GET("orders")
+    suspend fun getAllOrders(): List<Order>
+
+
 }

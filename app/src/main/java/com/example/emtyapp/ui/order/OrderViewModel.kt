@@ -41,15 +41,19 @@ class OrderViewModel @Inject constructor(
 
     fun updateOrderStatus(orderId: String, status: String) {
         viewModelScope.launch {
-            if (repository.updateOrderStatus(orderId, status)) {
+            val success = repository.updateOrderStatus(orderId, status)
+            if (success) {
                 _orders.update { orders ->
                     orders.map {
                         if (it.id == orderId) it.copy(status = status) else it
                     }
                 }
+            } else {
+                Log.e("OrderViewModel", "Échec mise à jour statut commande $orderId")
             }
         }
     }
+
     fun deleteOrder(orderId: String) {
         viewModelScope.launch {
             val success = repository.deleteOrder(orderId)
@@ -58,6 +62,12 @@ class OrderViewModel @Inject constructor(
             } else {
                 Log.e("OrderViewModel", "Échec suppression commande $orderId")
             }
+        }
+    }
+    fun loadAllOrders() {
+        viewModelScope.launch {
+            val allOrders = repository.getAllOrders()
+            _orders.value = allOrders
         }
     }
 

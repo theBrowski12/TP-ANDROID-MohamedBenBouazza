@@ -37,8 +37,13 @@ fun OrderScreen(
     var expandedOrderId by remember { mutableStateOf<String?>(null) }
 
     LaunchedEffect(userId) {
-        viewModel.loadUserOrders(userId)
+        if (isAdmin) {
+            viewModel.loadAllOrders()
+        } else {
+            viewModel.loadUserOrders(userId)
+        }
     }
+
 
     Scaffold(
         topBar = {
