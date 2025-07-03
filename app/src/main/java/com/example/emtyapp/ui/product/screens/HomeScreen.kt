@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Home
@@ -25,6 +26,7 @@ import com.example.emtyapp.ui.product.ProductIntent
 import com.example.emtyapp.ui.product.ProductViewModel
 import com.example.emtyapp.ui.product.component.ProductsList
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.List
 import androidx.compose.material3.FilterChipDefaults
 import androidx.navigation.NavController
 import com.example.emtyapp.ui.auth.AuthViewModel
@@ -42,6 +44,7 @@ fun HomeScreen(
     onNavigateToProfile: () -> Unit,
     onNavigateToEditProduct: (String) -> Unit,
     onNavigateToAddProduct: () -> Unit,
+    onNavigateToOrders: () -> Unit,
 
     ) {
     val state by viewModel.state.collectAsState()
@@ -252,6 +255,20 @@ fun HomeScreen(
                             )
                         }
                     }
+                    IconButton(onClick = {
+                        if (authViewModel.currentUser.value != null) {
+                            onNavigateToOrders()
+                        } else {
+                            onNavigateToLogin()
+                        }
+                    }) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.List,
+                            contentDescription = "Ordres",
+                            tint = Color(0xFF00D4FF)
+                        )
+                    }
+
                 }
             }
         } ,

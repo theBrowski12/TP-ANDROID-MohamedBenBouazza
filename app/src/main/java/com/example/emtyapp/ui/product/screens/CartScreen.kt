@@ -32,13 +32,26 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import android.content.Context
 import androidx.compose.ui.platform.LocalContext
 import coil.compose.rememberAsyncImagePainter
+import com.example.emtyapp.data.Entities.Order
+import com.example.emtyapp.ui.auth.AuthViewModel
+import com.example.emtyapp.ui.order.OrderViewModel
+import java.text.SimpleDateFormat
+import java.util.*
+
+fun getCurrentDate(): String {
+    val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+    return sdf.format(Date())
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CartScreen(
     navController: NavController,
-    viewModel: ProductViewModel
+    viewModel: ProductViewModel,
+    authViewModel: AuthViewModel
+
 ) {
+    val orderViewModel: OrderViewModel = hiltViewModel()
     val context = LocalContext.current
     val cartItems by viewModel.cartItems.collectAsState()
     val totalPrice by viewModel.cartTotal.collectAsState()
@@ -48,6 +61,9 @@ fun CartScreen(
             append("- ${item.product.name} (Quantité: ${item.quantity})\n")
         }
     }
+    val currentUser by authViewModel.currentUser.collectAsState()
+    val userId = currentUser?.id ?: ""
+
     Scaffold(
         topBar = {
             CenterAlignedTopAppBar(
@@ -78,6 +94,19 @@ fun CartScreen(
                     )
                     Button(
                         onClick = {
+                            if (userId.isNotEmpty()) {
+                                val order = Order(
+                                    userId = userId,
+                                    date = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(Date()),
+                                    total = totalPrice,
+                                    status = "En attente"
+                                )
+                                orderViewModel.createOrder(order) {
+                                    // ✅ Action à faire après création, ou simplement vider le panier :
+                                    viewModel.clearCart()
+                                }
+                            }
+
                             openWhatsAppWithMessage(
                                 context = context,
                                 phoneNumber = "0646564984", // Replace with your number

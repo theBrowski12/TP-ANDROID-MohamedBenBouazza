@@ -1,5 +1,6 @@
 package com.example.emtyapp.data.DI
 
+import com.example.emtyapp.data.API.OrderApi
 import com.example.emtyapp.data.API.ProductApi
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -18,7 +19,7 @@ import javax.inject.Singleton
 object NetworkModule {
 
     @Provides
-    fun provideBaseUrl(): String = "http://192.168.11.154:3000/"
+    fun provideBaseUrl(): String = "http://192.168.11.184:3000/"
     //fun provideBaseUrl(): String = "https://raw.githubusercontent.com/theBrowski12/TP-ANDROID-MohamedBenBouazza/master/app/public/products-api/"
     //hna ndiro ip adress:3000/
     @Provides
@@ -48,5 +49,9 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideProductApi(retrofit: Retrofit): ProductApi = retrofit.create(ProductApi::class.java)
+    @Provides
+    @Singleton
+    fun provideOrderApi(retrofit: Retrofit): OrderApi =
+        retrofit.create(OrderApi::class.java)
 
 }

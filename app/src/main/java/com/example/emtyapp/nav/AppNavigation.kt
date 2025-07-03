@@ -16,6 +16,7 @@ import com.example.emtyapp.ui.auth.LoginScreen
 import com.example.emtyapp.ui.auth.RegisterScreen
 import com.example.emtyapp.ui.auth.Screens.ProfileScreen
 import com.example.emtyapp.ui.auth.Screens.UserListScreen
+import com.example.emtyapp.ui.order.OrderScreen
 import com.example.emtyapp.ui.product.ProductViewModel
 import com.example.emtyapp.ui.product.component.AddNewProductScreen
 import com.example.emtyapp.ui.product.component.DetailsScreen
@@ -33,6 +34,8 @@ object Routes {
     const val UserList = "userList"
     const val EditProduct = "edit_product"
     const val AddProduct = "add_product"
+    const val Orders = "orders"
+
 }
 
 @Composable
@@ -80,7 +83,13 @@ fun AppNavigation(
                     navController.navigate(Routes.AddProduct) {
                         launchSingleTop = true
                     }
+                },
+                onNavigateToOrders = {
+                    navController.navigate(Routes.Orders) {
+                        launchSingleTop = true
+                    }
                 }
+
             )
         }
         composable(Routes.AddProduct) {
@@ -140,7 +149,8 @@ fun AppNavigation(
         composable(Routes.Cart) {
             CartScreen(
                 navController = navController,
-                viewModel = viewModel
+                viewModel = viewModel,
+                authViewModel = authViewModel
             )
         }
 
@@ -297,6 +307,24 @@ fun AppNavigation(
                 )
             } ?: Text("Chargement...")
         }
+        composable(Routes.Orders) {
+            val currentUser by authViewModel.currentUser.collectAsState()
+            currentUser?.let {
+                OrderScreen(
+                    isAdmin = it.role.lowercase() == "admin",
+                    userId = it.id,
+                    onNavigateBack = { navController.popBackStack() }, // <- ça doit être bien fourni
+                    onNavigateToHome = { navController.navigate(Routes.Home) },
+                    onNavigateToProfile = { navController.navigate(Routes.Profile) },
+                    onNavigateToCart = { navController.navigate(Routes.Cart) }
+                )
+            }
+        }
+
+
+
+
+
 
     }
 }

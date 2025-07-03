@@ -87,4 +87,12 @@ dependencies {
     // Debug
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    // Ktor client core
+    implementation("io.ktor:ktor-client-core:2.3.2")
+    // Ktor client OkHttp engine (Android)
+    implementation("io.ktor:ktor-client-okhttp:2.3.2")
+    // Ktor client content negotiation (pour JSON)
+    implementation("io.ktor:ktor-client-content-negotiation:2.3.2")
+    // Kotlinx serialization JSON
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
 }

@@ -1,15 +1,24 @@
 package com.example.emtyapp.data.Repository
 
 import android.util.Log
-import com.example.emtyapp.R
+//import androidx.compose.ui.autofill.ContentType
 import com.example.emtyapp.data.API.ProductApi
+import com.example.emtyapp.data.Entities.Order
 import com.example.emtyapp.data.Entities.Product
+import io.ktor.client.*
+import io.ktor.client.request.*
+import io.ktor.client.statement.*
+import io.ktor.http.*
 import javax.inject.Inject
-
+import android.app.Application
+import io.ktor.http.contentType
 
 class ProductRepository @Inject constructor(
     private val api: ProductApi
+
 ) {
+    private val httpClient = HttpClient()
+
 
     suspend fun getProducts(): List<Product> {
         return try {
@@ -40,6 +49,7 @@ class ProductRepository @Inject constructor(
             null
         }
     }
+
     suspend fun addProduct(product: Product): Boolean {
         return try {
             api.addProduct(product)
@@ -49,6 +59,7 @@ class ProductRepository @Inject constructor(
             false
         }
     }
+
     suspend fun deleteProduct(id: String): Boolean {
         return try {
             api.deleteProduct(id)
@@ -59,5 +70,20 @@ class ProductRepository @Inject constructor(
         }
     }
 
+    suspend fun createOrder(order: Order) {
+        try {
+            val response: HttpResponse = httpClient.post("http://192.168.11.184:3000/orders") {
+                contentType(ContentType.Application.Json)
+                setBody(order)
+            }
+            if (!response.status.isSuccess()) {
+                throw Exception("Erreur lors de la création de la commande : ${response.status}")
+            }
+        } catch (e: Exception) {
+            Log.e("ProductRepository", "Erreur createOrder: ${e.message}")
+            throw e
+        }
+    }
 
 }
+

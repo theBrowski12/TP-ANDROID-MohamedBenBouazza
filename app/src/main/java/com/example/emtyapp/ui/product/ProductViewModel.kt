@@ -3,6 +3,7 @@ package com.example.emtyapp.ui.product
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.emtyapp.data.Entities.CartItem
+import com.example.emtyapp.data.Entities.Order
 import com.example.emtyapp.data.Entities.Product
 import com.example.emtyapp.data.Repository.ProductRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -234,6 +235,15 @@ class ProductViewModel @Inject constructor(
         }
     }
 
+    fun createOrder(order: Order) {
+        viewModelScope.launch {
+            try {
+                repository.createOrder(order)
+            } catch (e: Exception) {
+                // Gère l'erreur (affichage, log, etc.)
+            }
+        }
+    }
 
 
 
