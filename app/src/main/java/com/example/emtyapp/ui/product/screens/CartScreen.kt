@@ -37,6 +37,7 @@ import com.example.emtyapp.ui.auth.AuthViewModel
 import com.example.emtyapp.ui.order.OrderViewModel
 import java.text.SimpleDateFormat
 import java.util.*
+import com.example.emtyapp.data.Entities.OrderItem
 
 fun getCurrentDate(): String {
     val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
@@ -95,11 +96,22 @@ fun CartScreen(
                     Button(
                         onClick = {
                             if (userId.isNotEmpty()) {
+                                val orderItems = cartItems.map {
+                                    OrderItem(
+                                        productId = it.product.id,
+                                        title = it.product.name,
+                                        quantity = it.quantity,
+                                        price = it.product.price
+                                    )
+                                }
+
                                 val order = Order(
                                     userId = userId,
                                     date = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(Date()),
                                     total = totalPrice,
-                                    status = "En attente"
+                                    status = "En attente",
+                                    items = orderItems
+
                                 )
                                 orderViewModel.createOrder(order) {
                                     // ✅ Action à faire après création, ou simplement vider le panier :

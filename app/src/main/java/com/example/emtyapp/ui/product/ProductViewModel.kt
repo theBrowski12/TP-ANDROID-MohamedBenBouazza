@@ -235,15 +235,6 @@ class ProductViewModel @Inject constructor(
         }
     }
 
-    fun createOrder(order: Order) {
-        viewModelScope.launch {
-            try {
-                repository.createOrder(order)
-            } catch (e: Exception) {
-                // Gère l'erreur (affichage, log, etc.)
-            }
-        }
-    }
 
 
 
