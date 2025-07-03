@@ -34,6 +34,7 @@ fun EditProductScreen(
     var oldPrice by remember { mutableStateOf(product.oldPrice.toString()) }
     var quantity by remember { mutableStateOf(product.quantity.toString()) }
     var category by remember { mutableStateOf(product.category) }
+    var imageUrl by remember { mutableStateOf(product.imageResURL ?: "") }
 
     val context = LocalContext.current
     val isFormValid = name.isNotBlank() && price.toDoubleOrNull() != null && quantity.toIntOrNull() != null
@@ -168,6 +169,15 @@ fun EditProductScreen(
                     }
                 }
             }
+            Spacer(modifier = Modifier.height(16.dp))
+
+            OutlinedTextField(
+                value = imageUrl,
+                onValueChange = { imageUrl = it },
+                label = { Text("URL de l'image", color = Color(0xFF00D4FF)) },
+                modifier = Modifier.fillMaxWidth(),
+                singleLine = true
+            )
 
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -181,7 +191,8 @@ fun EditProductScreen(
                             price = price.toDouble(),
                             oldPrice = oldPrice.toDoubleOrNull() ?: price.toDouble(),
                             quantity = quantity.toInt(),
-                            category = category
+                            category = category,
+                            imageResURL = imageUrl
                         )
                         viewModel.updateProduct(updatedProduct) { success ->
                             if (success) {
