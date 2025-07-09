@@ -72,7 +72,7 @@ class ProductRepository @Inject constructor(
 
     suspend fun createOrder(order: Order) {
         try {
-            val response: HttpResponse = httpClient.post("http://192.168.11.184:3000/orders") {
+            val response: HttpResponse = httpClient.post("http://192.168.11.198/orders") {
                 contentType(ContentType.Application.Json)
                 setBody(order)
             }

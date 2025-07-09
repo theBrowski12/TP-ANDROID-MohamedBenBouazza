@@ -19,9 +19,9 @@ import javax.inject.Singleton
 object NetworkModule {
 
     @Provides
-    fun provideBaseUrl(): String = "http://192.168.11.184:3000/"
+    fun provideBaseUrl(): String = "http://192.168.11.198:3000/"
     //fun provideBaseUrl(): String = "https://raw.githubusercontent.com/theBrowski12/TP-ANDROID-MohamedBenBouazza/master/app/public/products-api/"
-    //hna ndiro ip adress:3000/
+
     @Provides
     @Singleton
     fun provideOkHttpClient(): OkHttpClient {
